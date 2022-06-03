@@ -13,7 +13,7 @@ _Hello, my name is Alejandro, but they know me as AleDev and this is a small sum
 | PHP | 1 years | Medium |
 | SQL | 2 years | High |
 
-## Autores ✒️
+## social networks 🌐
 
-* **Micky014 (Manel Clúa)** - *Desarrollador FiveM & API* - [Micky014](https://github.com/Micky014)
-* **Pato Donald (Alejandro Font)** - *Desarrollador App & Discord Bot* - [AleF-DEV](https://github.com/AleF-DEV)
+* [Linkedin]([https://github.com/Micky014](https://www.linkedin.com/in/alejandro-font-6ab0ab208/))
+* [AleF-DEV](https://github.com/AleF-DEV)
