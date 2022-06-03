@@ -7,7 +7,7 @@ _Hello, my name is Alejandro, but they know me as AleDev and this is a small sum
 | Language | Years of experience | Level |
 | ------------- | ------------- | :---: |
 | C# | 2 years | High |
-| Java | 1 years | Medium |
+| Java | 1 years | Medium/High |
 | Javascript | 3 years | High |
 | C++ | 1 years | Low |
 | PHP | 1 years | Medium |
