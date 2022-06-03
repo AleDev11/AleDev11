@@ -1,6 +1,6 @@
 ### Hello 👋
 
-_PoseidonAC es un anticheat de pago para FiveM, tiene una API externa que te permite liberar el servidor y realizar otras funciones como (AI / OCR)._
+_Hello, my name is Alejandro, but they know me as AleDev and this is a small summary of my entire career, to know more about me, look for me on my social networks, which I leave below._
 
 ## programming languages 🖥️
 
