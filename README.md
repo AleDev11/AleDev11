@@ -6,12 +6,12 @@ _Hello, my name is Alejandro, but they know me as AleDev and this is a small sum
 
 | Language | Years of experience | Level |
 | ------------- | ------------- | :---: |
-| C# | Detección de armas en una lista negra | ✅ |
-| Java | Detección de eventos en una lista negra | ✅ |
-| Javascript | Detección de entidades en una lista negra | ✅ |
-| C++ | Detección de texturas en una lista negra | ✅ |
-| PHP | Detección de entidades en una lista negra | ✅ |
-| SQL | Detección de entidades en una lista negra | ✅ |
+| C# |  | ✅ |
+| Java |  | ✅ |
+| Javascript |  | ✅ |
+| C++ |  | ✅ |
+| PHP |  | ✅ |
+| SQL |  | ✅ |
 
 ## Autores ✒️
 
