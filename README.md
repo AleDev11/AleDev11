@@ -16,6 +16,6 @@ _Hello, my name is Alejandro, but they know me as AleDev and this is a small sum
 ## Social networks 🌐
 
 * [GitHub](https://github.com/AleDev11)
-* [Linkedin](https://www.linkedin.com/in/alejandro-font-6ab0ab208/)
+* [Linkedin](www.linkedin.com/in/alejandro-font-muñiz)
 * [YouTube](https://www.youtube.com/channel/UCzFMIPWGu728lW2OIcLtaeQ)
 * [Twitch](https://www.twitch.tv/aledev11)
