@@ -9,6 +9,7 @@ _Hello, my name is Alejandro, but they know me as AleDev and this is a small sum
 | C# | 2 years | High |
 | Java | 1 years | Medium/High |
 | Javascript | 3 years | High |
+| Python | 1 years | Medium |
 | C++ | 1 years | Low |
 | PHP | 1 years | Medium |
 | SQL | 2 years | High |
