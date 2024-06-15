@@ -16,8 +16,4 @@ _I'm Alejandro Font, a programmer passionate about technology and software devel
 
 ## Social networks 🌐
 
-* [Portafolio](https://portafolio.alefont.dev)
-* [GitHub](https://github.com/AleDev11)
-* [Linkedin](https://www.linkedin.com/in/alejandro-font-muñiz/)
-* [YouTube](https://www.youtube.com/channel/UCzFMIPWGu728lW2OIcLtaeQ)
-* [Twitch](https://www.twitch.tv/aledev11)
+
