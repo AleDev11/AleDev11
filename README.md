@@ -16,4 +16,7 @@ _I'm Alejandro Font, a programmer passionate about technology and software devel
 
 ## Social networks 🌐
 
-
+- **Portafolio**: [Mi Portafolio](https://aledev11.github.io/portfolio-json/)
+- **Email**: fontalejandro0@gmail.com
+- **LinkedIn**: [Alejandro Font](https://www.linkedin.com/in/alejandro-font-mu%C3%B1iz/)
+- **GitHub**: [AleDev11](https://github.com/AleDev11)
