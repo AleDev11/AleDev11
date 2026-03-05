@@ -1,22 +1,36 @@
-### Hello 👋
+# Hey, I'm Alejandro 👋
 
-_I'm Alejandro Font, a programmer passionate about technology and software development. With experience in multiple languages, I enjoy creating innovative and efficient solutions. My focus is on cross-platform application development and the creation of interactive applications that provide an exceptional user experience. I am constantly looking for new challenges and opportunities to expand my knowledge and skills in the programming field._
+**Software Developer** in Barcelona · I build web apps, management platforms, AI agents and RPA automations.
 
-## Programming languages 🖥️
+I work at [Infini](https://www.infini.es/), a consultancy specializing in intelligent automation and AI. I've been part of international projects with teams in the Middle East — every week brings a different sector and a different challenge.
 
-| Language | Years of experience | Level |
-| ------------- | ------------- | :---: |
-| C# | 2 years | High |
-| Java | 1 years | Medium/High |
-| Javascript | 3 years | High |
-| Python | 1 years | Medium |
-| C++ | 1 years | Low |
-| PHP | 1 years | Medium |
-| SQL | 2 years | High |
+🌐 **[afont.dev](https://afont.dev)**
 
-## Social networks 🌐
+---
 
-- **Portafolio**: [Mi Portafolio](https://cv.aledev.es/)
-- **Email**: fontalejandro0@gmail.com
-- **LinkedIn**: [Alejandro Font](https://www.linkedin.com/in/alejandro-font-mu%C3%B1iz/)
-- **GitHub**: [AleDev11](https://github.com/AleDev11)
+### Main stack
+
+```
+Frontend    →  React · Next.js · TypeScript · Tailwind CSS · Vue.js
+Backend     →  Java · Spring Boot · Python · Node.js · Odoo
+Data        →  PostgreSQL · MySQL · MongoDB · Redis
+Cloud       →  AWS · Docker · Vercel · CI/CD · Linux
+Other       →  AI · RPA · REST APIs · GraphQL
+```
+
+---
+
+### What I'm up to
+
+- 🔨 Building management platforms and custom web applications
+- 🤖 Creating AI agents and process automations
+- 📚 Pursuing certifications: AWS Cloud Practitioner, Oracle Java SE, PSM I
+- ✍️ Writing on my [blog](https://afont.dev/blog)
+
+---
+
+### Get in touch
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alejandro-font-mu%C3%B1iz/)
+[![Email](https://img.shields.io/badge/Email-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:fontalejandro0@gmail.com)
+[![Portfolio](https://img.shields.io/badge/Portfolio-000?style=flat&logo=vercel&logoColor=white)](https://afont.dev)
