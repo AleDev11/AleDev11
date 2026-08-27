@@ -11,9 +11,9 @@ I work at [Infini](https://www.infini.es/), a consultancy specializing in intell
 ### Main stack
 
 ```
-Frontend    →  React · Next.js · TypeScript · Tailwind CSS · Vue.js
-Backend     →  Java · Spring Boot · Python · Node.js · Odoo
-Data        →  PostgreSQL · MySQL · MongoDB · Redis
+Frontend    →  React · Next.js · Astro · TypeScript · Tailwind CSS · shadcn/ui · Vue.js
+Backend     →  Bun · Hono · Node.js · Java · Spring Boot · Python · Odoo
+Data        →  PostgreSQL · MongoDB · Redis · MySQL · MinIO
 Cloud       →  AWS · Docker · Vercel · CI/CD · Linux
 Other       →  AI · RPA · REST APIs · GraphQL
 ```
