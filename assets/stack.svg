@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="398" viewBox="0 0 1000 398" role="img" aria-label="Stack — FRONTEND: React, Next.js, Astro, TypeScript, Tailwind CSS, Vue.js; BACKEND: Bun, Hono, Node.js, Java, Spring Boot, Python, Odoo; DATA: PostgreSQL, MongoDB, Redis, MySQL, MinIO; CLOUD &amp; TOOLING: AWS, Cloudflare, Docker, Vercel, Linux, GraphQL; AI &amp; AUTOMATION: AI Agents, RPA, Process automation, REST APIs">
+<title>Stack — FRONTEND: React, Next.js, Astro, TypeScript, Tailwind CSS, Vue.js; BACKEND: Bun, Hono, Node.js, Java, Spring Boot, Python, Odoo; DATA: PostgreSQL, MongoDB, Redis, MySQL, MinIO; CLOUD &amp; TOOLING: AWS, Cloudflare, Docker, Vercel, Linux, GraphQL; AI &amp; AUTOMATION: AI Agents, RPA, Process automation, REST APIs</title>
+<defs>
+<style>
+@font-face{font-family:'d9';src:url(data:font/woff2;base64,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) format('woff2');}
+@font-face{font-family:'l5';src:url(data:font/woff2;base64,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) format('woff2');}
+@font-face{font-family:'l6';src:url(data:font/woff2;base64,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) format('woff2');}
+text{font-kerning:normal}
+@keyframes sl{0%,70%,100%{transform:translateX(0) skewX(0)}80%{transform:translateX(5px) skewX(-14deg)}}.sl{animation:sl 4s cubic-bezier(0.34,1.4,0.64,1) infinite;transform-box:fill-box}@keyframes hd{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}.hd{animation:hd .8s cubic-bezier(0.16, 1, 0.3, 1) both}
+@keyframes cin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes chl{0%,6%,100%{stroke:#2a2a2a;fill:#0a0a0a}2%,4%{stroke:#ff6b00;fill:#2a1405}}@keyframes cth{0%,6%,100%{fill:#b0b0b0}2%,4%{fill:#ffffff}}.chip{animation:cin .6s cubic-bezier(0.16, 1, 0.3, 1) both}.chip .cr{animation:chl 10.8s linear infinite}.chip .ct{animation:cth 10.8s linear infinite}
+@keyframes lb{from{opacity:0}to{opacity:1}}.lb{animation:lb .8s cubic-bezier(0.16, 1, 0.3, 1) both}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+
+</defs>
+<rect x="0.5" y="0.5" width="999" height="397" fill="#0a0a0a" stroke="#2a2a2a"/>
+<g class="hd" style="animation-delay:0.0s">
+<text x="48.0" y="74.0" font-family="d9" font-size="24" fill="#ff6b00" letter-spacing="-1.20" class="sl">///</text>
+<text x="90.2" y="74.0" font-family="d9" font-size="40" fill="#ffffff" letter-spacing="0.40">STACK</text>
+<line x1="214" y1="61" x2="952" y2="61" stroke="#1f1f1f"/>
+</g>
+<g class="lb" style="animation-delay:0.20s">
+<text x="48.0" y="132.0" font-family="l6" font-size="11.5" fill="#888888" letter-spacing="2.20">FRONTEND</text>
+</g>
+<g class="chip" style="animation-delay:0.30s">
+<rect class="cr" style="animation-delay:1.50s" x="230.0" y="112" width="58.1" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="242.0" y="131.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:1.50s">REACT</text>
+</g>
+<g class="chip" style="animation-delay:0.32s">
+<rect class="cr" style="animation-delay:1.78s" x="298.1" y="112" width="66.2" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="310.1" y="131.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:1.78s">NEXT.JS</text>
+</g>
+<g class="chip" style="animation-delay:0.34s">
+<rect class="cr" style="animation-delay:2.06s" x="374.3" y="112" width="59.2" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="386.3" y="131.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:2.06s">ASTRO</text>
+</g>
+<g class="chip" style="animation-delay:0.36s">
+<rect class="cr" style="animation-delay:2.34s" x="443.5" y="112" width="90.6" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="455.5" y="131.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:2.34s">TYPESCRIPT</text>
+</g>
+<g class="chip" style="animation-delay:0.38s">
+<rect class="cr" style="animation-delay:2.62s" x="544.1" y="112" width="102.7" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="556.1" y="131.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:2.62s">TAILWIND CSS</text>
+</g>
+<g class="chip" style="animation-delay:0.40s">
+<rect class="cr" style="animation-delay:2.90s" x="656.9" y="112" width="60.3" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="668.9" y="131.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:2.90s">VUE.JS</text>
+</g>
+<line x1="48" y1="153" x2="952" y2="153" stroke="#1f1f1f" stroke-dasharray="2 4"/>
+<g class="lb" style="animation-delay:0.32s">
+<text x="48.0" y="184.0" font-family="l6" font-size="11.5" fill="#888888" letter-spacing="2.20">BACKEND</text>
+</g>
+<g class="chip" style="animation-delay:0.54s">
+<rect class="cr" style="animation-delay:3.18s" x="230.0" y="164" width="46.0" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="242.0" y="183.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:3.18s">BUN</text>
+</g>
+<g class="chip" style="animation-delay:0.56s">
+<rect class="cr" style="animation-delay:3.46s" x="286.0" y="164" width="54.2" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="298.0" y="183.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:3.46s">HONO</text>
+</g>
+<g class="chip" style="animation-delay:0.58s">
+<rect class="cr" style="animation-delay:3.74s" x="350.1" y="164" width="68.4" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="362.1" y="183.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:3.74s">NODE.JS</text>
+</g>
+<g class="chip" style="animation-delay:0.60s">
+<rect class="cr" style="animation-delay:4.02s" x="428.5" y="164" width="49.9" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="440.5" y="183.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:4.02s">JAVA</text>
+</g>
+<g class="chip" style="animation-delay:0.62s">
+<rect class="cr" style="animation-delay:4.30s" x="488.4" y="164" width="99.1" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="500.4" y="183.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:4.30s">SPRING BOOT</text>
+</g>
+<g class="chip" style="animation-delay:0.64s">
+<rect class="cr" style="animation-delay:4.58s" x="597.6" y="164" width="67.1" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="609.6" y="183.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:4.58s">PYTHON</text>
+</g>
+<g class="chip" style="animation-delay:0.66s">
+<rect class="cr" style="animation-delay:4.86s" x="674.7" y="164" width="54.0" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="686.7" y="183.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:4.86s">ODOO</text>
+</g>
+<line x1="48" y1="205" x2="952" y2="205" stroke="#1f1f1f" stroke-dasharray="2 4"/>
+<g class="lb" style="animation-delay:0.44s">
+<text x="48.0" y="236.0" font-family="l6" font-size="11.5" fill="#888888" letter-spacing="2.20">DATA</text>
+</g>
+<g class="chip" style="animation-delay:0.80s">
+<rect class="cr" style="animation-delay:5.14s" x="230.0" y="216" width="94.6" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="242.0" y="235.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:5.14s">POSTGRESQL</text>
+</g>
+<g class="chip" style="animation-delay:0.82s">
+<rect class="cr" style="animation-delay:5.42s" x="334.6" y="216" width="78.7" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="346.6" y="235.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:5.42s">MONGODB</text>
+</g>
+<g class="chip" style="animation-delay:0.84s">
+<rect class="cr" style="animation-delay:5.70s" x="423.3" y="216" width="56.2" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="435.3" y="235.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:5.70s">REDIS</text>
+</g>
+<g class="chip" style="animation-delay:0.86s">
+<rect class="cr" style="animation-delay:5.98s" x="489.5" y="216" width="60.1" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="501.5" y="235.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:5.98s">MYSQL</text>
+</g>
+<g class="chip" style="animation-delay:0.88s">
+<rect class="cr" style="animation-delay:6.26s" x="559.6" y="216" width="56.5" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="571.6" y="235.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:6.26s">MINIO</text>
+</g>
+<line x1="48" y1="257" x2="952" y2="257" stroke="#1f1f1f" stroke-dasharray="2 4"/>
+<g class="lb" style="animation-delay:0.56s">
+<text x="48.0" y="288.0" font-family="l6" font-size="11.5" fill="#888888" letter-spacing="2.20">CLOUD &amp; TOOLING</text>
+</g>
+<g class="chip" style="animation-delay:1.02s">
+<rect class="cr" style="animation-delay:6.54s" x="230.0" y="268" width="46.7" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="242.0" y="287.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:6.54s">AWS</text>
+</g>
+<g class="chip" style="animation-delay:1.04s">
+<rect class="cr" style="animation-delay:6.82s" x="286.7" y="268" width="94.0" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="298.7" y="287.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:6.82s">CLOUDFLARE</text>
+</g>
+<g class="chip" style="animation-delay:1.06s">
+<rect class="cr" style="animation-delay:7.10s" x="390.7" y="268" width="67.6" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="402.7" y="287.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:7.10s">DOCKER</text>
+</g>
+<g class="chip" style="animation-delay:1.08s">
+<rect class="cr" style="animation-delay:7.38s" x="468.3" y="268" width="64.3" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="480.3" y="287.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:7.38s">VERCEL</text>
+</g>
+<g class="chip" style="animation-delay:1.10s">
+<rect class="cr" style="animation-delay:7.66s" x="542.5" y="268" width="56.1" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="554.5" y="287.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:7.66s">LINUX</text>
+</g>
+<g class="chip" style="animation-delay:1.12s">
+<rect class="cr" style="animation-delay:7.94s" x="608.7" y="268" width="75.4" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="620.7" y="287.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:7.94s">GRAPHQL</text>
+</g>
+<line x1="48" y1="309" x2="952" y2="309" stroke="#1f1f1f" stroke-dasharray="2 4"/>
+<g class="lb" style="animation-delay:0.68s">
+<text x="48.0" y="340.0" font-family="l6" font-size="11.5" fill="#888888" letter-spacing="2.20">AI &amp; AUTOMATION</text>
+</g>
+<g class="chip" style="animation-delay:1.26s">
+<rect class="cr" style="animation-delay:8.22s" x="230.0" y="320" width="81.4" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="242.0" y="339.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:8.22s">AI AGENTS</text>
+</g>
+<g class="chip" style="animation-delay:1.28s">
+<rect class="cr" style="animation-delay:8.50s" x="321.4" y="320" width="45.3" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="333.4" y="339.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:8.50s">RPA</text>
+</g>
+<g class="chip" style="animation-delay:1.30s">
+<rect class="cr" style="animation-delay:8.78s" x="376.7" y="320" width="150.7" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="388.7" y="339.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:8.78s">PROCESS AUTOMATION</text>
+</g>
+<g class="chip" style="animation-delay:1.32s">
+<rect class="cr" style="animation-delay:9.06s" x="537.4" y="320" width="80.9" height="30" rx="4" fill="#0a0a0a" stroke="#2a2a2a"/>
+<text x="549.4" y="339.5" font-family="l5" font-size="11.5" fill="#b0b0b0" letter-spacing="1.40" class="ct" style="animation-delay:9.06s">REST APIS</text>
+</g>
+</svg>
