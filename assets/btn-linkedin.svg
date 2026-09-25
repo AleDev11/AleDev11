@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="52" viewBox="0 0 120 52" role="img" aria-label="LinkedIn">
+<title>LinkedIn</title>
+<defs>
+<style>
+@font-face{font-family:'l6';src:url(data:font/woff2;base64,d09GMgABAAAAAAMYABAAAAAABqgAAAK8AAQaXgAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbgQIcKgZgP1NUQVQqAFQRCAqCCIFYATYCJAMgCxIABCAFhAwHIAwHG0wFERWcOyF+HtjGwkejphqFQbTsrdfzNq+pFGJpLH2f8G88POlBvT+ZhZUls1RF8FRZFcASKq+FKiEAjvQspuXHkO3k1b5AFxBVuArIzI92wcz/zbQ2bsC+JRRYwIl8ak3BLEujAZhgoOPWBl+g907gAO8dTRA59dZRhGfq3/WrmxeoD0hCqCkE6upuiDR1+twFGu5Ye2CXhjL8r0Bs37hvl9oIhCypLdSWdJbRzxhZAgAQspBkNVb7QCEVoe6pN916OwByfJLOapCuicicNrHKkFgOTPgj7Np4+IC3dTY/P/nfN2r0j6MISJOLEp0VQqgt0FygvXR485YDAUlA1EhLQEKB5gqB5rKJqK+2JOtsmlnmmv+/6GyqWeY4Xt57w6te8XIBAEL8r0agNmiMWpiKhYD8iUSY9TE5169Zt16tete//FI688UXdY9W7rWHozj70Kt1qbSBuupt0Izq1ZR8Wl5vydK6y/olcTIRLi0m9F0+VeWHbj5s4J4lvZYN3L9nxMbu+7oN2HFHOb981+W6qsq1+17/+rbitv/eTE0oHylV5aOLblv4wO3bH3rjsRPb7q2a9SoPT8fc/9yjj10pdz331ttAILdddUvzX/hXo3G/1i6Kb+HL7x+AflhF6lSUqCmB4NuidF8AUqdBgFWbfDILUqWKF1XR1YTUWxXPqFKp8pdAba0lELCsjn0KkevgKSYIHT0FkoY+BoVhvirnMFDDoqgr1dQx1siC+nEKietqHNdkM0y73He9kiiSbJC9B2RVNJ/oT9Y5BvAryaQqPcwLQnllmRYjUXT90VV9hR/GxH0R3QgcTMpCTOgttY4uo2sHsT9F5yNuwa2iT64JsqSOE2jK8SXKPHpM88JPWiX6u7hOiRgVN0mwBVUV/lBbrCspNsi281DkpD99MZ0MoeUeSvbCxafzAAAA) format('woff2');}
+text{font-kerning:normal}
+@keyframes sh{0%,70%{transform:translateX(-80px)}100%{transform:translateX(198px)}}.sh{animation:sh 3.5s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<clipPath id="bc"><rect x="1" y="1" width="118.3" height="50" rx="6"/></clipPath>
+<linearGradient id="shg"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<rect x="2" y="2" width="116.3" height="48" rx="6" fill="#0a0a0a" stroke="#ff6b00" stroke-width="2"/>
+<g clip-path="url(#bc)"><rect class="sh" x="0" y="0" width="60" height="52" fill="url(#shg)" transform="skewX(-20)"/></g>
+<text x="60.1" y="31.0" font-family="l6" font-size="13" fill="#ff6b00" letter-spacing="1.30" text-anchor="middle">LINKEDIN</text>
+</svg>

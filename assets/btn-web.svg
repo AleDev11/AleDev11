@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="129" height="52" viewBox="0 0 129 52" role="img" aria-label="afont.dev">
+<title>afont.dev</title>
+<defs>
+<style>
+@font-face{font-family:'l6';src:url(data:font/woff2;base64,d09GMgABAAAAAAQgABAAAAAACCQAAAPEAAQaXgAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbgiAcKgZgP1NUQVQqAGQRCAqDSIJmATYCJAMsCxgABCAFhAwHIAwHG5QGyC4HbCKTKy00W+1MZxrzHRRyxf1SuNfQorcsHv5de7svmZn/mxRYtctsHCsUElACOVZrEYTaswpQsvA1bv5vTv+AuIThDkkB4AVGl5dc29WN1DypTRMrAmFITanxEH+o737GpGAAxwQcgJNioW3RcLRe0Ea19fLlw0DA/5zr62g2SrsosgM9rNIKqqIs2mnb3mEGcEZ7ZM7eao6vsjnT3zv9Y53/lvcsoUgTGmuer0HppwowwMDCd4/aQ7tPLZpCH7CLsy33NVjDm9fkYCAi1eAk0YcLjAKSEIZCoFiDE75ubeuD5Ms0WYZkDfR/Ic5IW4ZYBEIjGUqKfcLMikRrFQcHSrUwrZB0hoowzN2WeaoIq+3yoZ1Df9xIclQkTthU1wH9NZ95nJ3pp6DPclN6dqWOKjj9nr4lDIQka3QGihCKQNKCDJowncUpZdKAVqBYx9ENm2sFVBO/ygGiSG/lwd6ucQQuRgGgCMRy5hQk8GyFgerh70A7jhCAgLSMcAErRHzWIzIrDAvCn5JMwgBJQNTSUQAkZMyKEJgV6RAwKVUEVqA0aNWpz0Cm45t1IPM3tznIXp71KIhzhcg/oIJ5YBQXgWeABpAkIYSWEc08im1Lme7FxjT1UkIofiC+bzRhJCGm3pnNpNd0WnYysP088o3Ch1LqYExRxWr2chN2LCKhK8fDp7fm8z26WDxNHPY1qSLzrtyuPXAV+be1LXHcUbVeTBifTFhJCKvmWl+DkS8DccaxjBFh00wr1Aw+5SaBVofsI7SuliKLZqYW9/hS16tcaIKawbR2v4gc+fUel7oB9XKTPKmhffXr8qubm3TX/Y+wrD0s1XkCvVSvxy/VDI/ItR6y9A7IdcMBw18Ye+HBluYvO2dc3cKtnyvmfbP5HD6t5/yQTDJMbw+RgP4K3wcCTf94yWF9otX/zfMS/P97ki6XmNci7wE6CQS/yZe+E85oGwH2GsI2JV9WqVETd4IdcsX1G0o9sHEH3VLM+8eS7cJQrREOAkaNuCBCVEfwDgNhmSOQjPsJsj1+G5sctA5HvLqzLKY0gtG4isVnTcYWrGCqEI1CIiMMOAxWKYM+MsSgky5o2qI5Bl002DxkFmHQwI+QYRqdgYOMIFS6SjSaRCGU3wzKLGwpkBbDJIsQEbaM0NFF7lZu5axH9UKWKBph9409EInfomkaAYXF4FVZhgQRVa+1e/GBnEanlDUb+H+RiAgMW6QbxaBUoPB4lDlIQDk3CYNTAWFVEI0zNmjpXDgORoCuPmWh+n303k9zDwAA) format('woff2');}
+text{font-kerning:normal}
+@keyframes sh{0%,70%{transform:translateX(-80px)}100%{transform:translateX(207px)}}.sh{animation:sh 3.5s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<clipPath id="bc"><rect x="1" y="1" width="127.5" height="50" rx="6"/></clipPath>
+<linearGradient id="shg"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<rect x="2" y="2" width="125.5" height="48" rx="6" fill="#0a0a0a" stroke="#ff6b00" stroke-width="2"/>
+<g clip-path="url(#bc)"><rect class="sh" x="0" y="0" width="60" height="52" fill="url(#shg)" transform="skewX(-20)"/></g>
+<text x="64.8" y="31.0" font-family="l6" font-size="13" fill="#ff6b00" letter-spacing="1.30" text-anchor="middle">AFONT.DEV</text>
+</svg>

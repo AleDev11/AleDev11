@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="121" height="52" viewBox="0 0 121 52" role="img" aria-label="Email me">
+<title>Email me</title>
+<defs>
+<style>
+@font-face{font-family:'l6';src:url(data:font/woff2;base64,d09GMgABAAAAAAL4ABAAAAAABnAAAAKbAAQaXgAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbgRgcKgZgP1NUQVQqAFQRCAqBRIEvATYCJAMcCxAABCAFhAwHIAwHGzUFERWcHwH+csANGfIztcomhpjObMGNFpFHL26IcNQPgcaNfnXlfFNyp30E1RrZs7dPGEBUTI4IdRzpVGyiEGVk2BJ5ggBI/+vhDCMtLYvYxst8vXW4rZdUFnFJr9V9Az9E898coBtxdf9loSLnfDdf7ygek+ssocACTjxr0wTKAoyGYWDz+QKJAoomcIDhX4Bfd8rvOsZ7lZf3HxKoBiQhlAiBSl0NliZMmjFL7ablu7aoleG/ArFx9Y4tyhEIWVIulEsGyhhhmizjrpCFJCu54wEshFAiRaGoTdldT6xlPwByPErzlJCOE8X0MrHE4FhosMH1bVm9d5cHOpqZz/17qaRf7EdAGlf0RkeFEMoFmgq0lfauXbcrIAmIkjQPJBRoqhBoKhuDauWSrKOxJppq5n+xgBkvbw/cFQsAEOK/6kAZqEUp+mMiIPcWxnjlRXUurak6WLW/ck7lrIVVC6rKalSqknxVWVWpl6sE2fMXbnvJIjFPs4qnva+ot20fa78fAycZ2duOO58oT7iXGd273lb7W3rFMG97t/LfBud4Saq7rum6dmPPyp5AILdesqLs9NildSO+lhfFJ3j+5Sye05qRDhe9USqBoB12uh4BGlYvAABl6YxZqbVmcc3I6Gx0XDQyXTfML4EyNRIIAABU2KEQuQLn6Si0dx4ltR6iwlAvsjkOlZgTlWKp9rFMElTHERDbqg9aM8j6IvD8CimSbKC9j9GqbD/xH60LCPGvQpO68qEoEeVXVVY6ougFq6n+Cj9IPPcCeDEmkFalmFFfooiuo2mHk2AK1idusVfHn0ITZEl1U9xW7ivyPDzGRRlkzSP8Lh6pAOLyJgm2oKrCHzcW60mKjWWbPABO2t+n+93xofaUpLELGQAAAA==) format('woff2');}
+text{font-kerning:normal}
+@keyframes sh{0%,70%{transform:translateX(-80px)}100%{transform:translateX(199px)}}.sh{animation:sh 3.5s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<clipPath id="bc"><rect x="1" y="1" width="119.5" height="50" rx="6"/></clipPath>
+<linearGradient id="shg"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<rect x="1" y="1" width="119.5" height="50" rx="6" fill="#ff6b00"/>
+<g clip-path="url(#bc)"><rect class="sh" x="0" y="0" width="60" height="52" fill="url(#shg)" transform="skewX(-20)"/></g>
+<text x="60.8" y="31.0" font-family="l6" font-size="13" fill="#0a0a0a" letter-spacing="1.30" text-anchor="middle">EMAIL ME</text>
+</svg>
