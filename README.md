@@ -4,7 +4,7 @@
 
 <img src="assets/marquee.svg" width="100%" alt="Astro · React · TypeScript · Next.js · Bun · Hono · Java · Spring Boot · Python · AI Agents · RPA · Cloudflare · AWS · Docker · PostgreSQL" />
 
-<img src="assets/stats.svg" width="100%" alt="+3 years building software · 2 products live · 3 languages" />
+<img src="assets/stats.svg" width="100%" alt="Years building software · products live · languages spoken" />
 
 <br />
 
