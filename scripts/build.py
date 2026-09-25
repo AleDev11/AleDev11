@@ -359,6 +359,21 @@ def marquee(items, name, fill, fg, sep, reverse=False, h=62, size=26, speed=34):
     s.render(name)
 
 
+# Proyectos en vivo. El primero sale como tarjeta destacada a todo el ancho.
+PROJECTS = [
+    ("Rax Custom", "raxcustom.com",
+     "Website for a vehicle upholstery and restoration workshop in Tenerife: 3D seat configurator, "
+     "live Google reviews, project gallery and instant quote requests.",
+     ["Astro", "Bun", "Three.js", "Leaflet", "TypeScript"], "project-rax.svg"),
+    ("afont/ui", "ui.afont.dev",
+     "My own UI component registry, installable straight into any project from the command line.",
+     ["React", "TypeScript", "shadcn/ui", "Tailwind"], "project-ui.svg"),
+    ("Fleetly", "fleetly.afont.dev",
+     "Company portal for internal fleet management, with a separate administration panel.",
+     ["TypeScript", "React", "PostgreSQL"], "project-fleetly.svg"),
+]
+
+
 def odometer(s, x, y, value, size, step, cls, style, delay):
     """Numero que rueda de 0 a `value`, cifra a cifra, como un cuentakilometros."""
     s.use("d9", "0123456789+.")
@@ -385,8 +400,8 @@ def odometer(s, x, y, value, size, step, cls, style, delay):
 
 def stats():
     years = months_since(CAREER_START) // 12
-    data = [(f"+{years}", "YEARS BUILDING SOFTWARE"), ("2", "PRODUCTS LIVE"), ("3", "LANGUAGES · ES · EN · CA")]
-    s = Svg(1000, 132, f"+{years} years building software · 2 products live · 3 languages")
+    data = [(f"+{years}", "YEARS BUILDING SOFTWARE"), (str(len(PROJECTS)), "PROJECTS LIVE"), ("3", "LANGUAGES · ES · EN · CA")]
+    s = Svg(1000, 132, f"+{years} years building software · {len(PROJECTS)} projects live · 3 languages")
     s.add(f'<rect width="{s.w}" height="{s.h}" fill="{BORDER}"/>')
     cw = (s.w - 2 - 2) / 3
     s.css.append(
@@ -556,11 +571,11 @@ def experience():
     s.render("experience.svg")
 
 
-def project(tag, name, url_label, desc, tags, fname):
-    s = Svg(488, 300, f"{name} — {desc}")
+def project(tag, name, url_label, desc, tags, fname, w=488, kicker=""):
+    s = Svg(w, 300, f"{name} — {desc}")
     frame(s, fill=BG_ALT)
     s.css.append(
-        "@keyframes sw{0%{transform:translateX(-160px)}60%,100%{transform:translateX(488px)}}"
+        "@keyframes sw{0%{transform:translateX(-160px)}60%,100%{transform:translateX(" + str(w) + "px)}}"
         ".sw{animation:sw 4.5s cubic-bezier(0.65,0,0.35,1) infinite}"
         "@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}.dot{animation:blink 2.4s ease-in-out infinite}"
         "@keyframes arr{0%,100%{transform:translate(0,0)}50%{transform:translate(3px,-3px)}}"
@@ -573,30 +588,33 @@ def project(tag, name, url_label, desc, tags, fname):
         f'<linearGradient id="sg"><stop offset="0" stop-color="{ACCENT}" stop-opacity="0"/>'
         f'<stop offset=".5" stop-color="{ACCENT}"/><stop offset="1" stop-color="{ACCENT}" stop-opacity="0"/></linearGradient>'
     )
-    s.add(f'<rect x="1" y="1" width="486" height="2" fill="{BORDER}"/>')
+    s.add(f'<rect x="1" y="1" width="{w - 2}" height="2" fill="{BORDER}"/>')
     s.add(f'<rect class="sw" x="0" y="1" width="160" height="2" fill="url(#sg)"/>')
-    s.text(470, 290, tag, "d9", 170, "#161616", anchor="end")
+    s.text(w - 18, 290, tag, "d9", 170, "#161616", anchor="end")
     s.add('<g class="pin">')
     s.text(28, 50, tag, "d9", 22, ACCENT)
-    s.text(28 + measure(tag, "d9", 22) + 10, 49, "///", "d9", 16, ACCENT_DEEP, ls=-0.8)
-    s.add(f'<circle class="dot" cx="{460 - measure("LIVE", "l5", 11, 1.8) - 12}" cy="45" r="4" fill="{GREEN}"/>')
-    s.text(460, 49, "LIVE", "l5", 11, DIM, ls=1.8, anchor="end")
+    kx = 28 + measure(tag, "d9", 22) + 10
+    s.text(kx, 49, "///", "d9", 16, ACCENT_DEEP, ls=-0.8)
+    if kicker:
+        s.text(kx + measure("///", "d9", 16, -0.8) + 10, 48, kicker, "l6", 11, FAINT, ls=2)
+    s.add(f'<circle class="dot" cx="{w - 28 - measure("LIVE", "l5", 11, 1.8) - 12}" cy="45" r="4" fill="{GREEN}"/>')
+    s.text(w - 28, 49, "LIVE", "l5", 11, DIM, ls=1.8, anchor="end")
     s.text(28, 112, name.upper(), "d9", 48, TEXT, ls=0.4)
     y = 146
-    for l in wrap(desc, "b4", 14.5, 420):
+    for l in wrap(desc, "b4", 14.5, min(w - 68, 620)):
         s.text(28, y, l, "b4", 14.5, MUTED)
         y += 23
     s.add("</g>")
     x = 28
     for i, t in enumerate(tags):
         x += chip(s, x, 206, t, delay=0.4 + i * 0.08, wave=1.2 + i * 0.3) + 8
-    s.add(f'<line x1="28" y1="256" x2="460" y2="256" stroke="{BORDER}"/>')
+    s.add(f'<line x1="28" y1="256" x2="{w - 28}" y2="256" stroke="{BORDER}"/>')
     s.text(28, 281, "VIEW LIVE", "l6", 12, ACCENT, ls=2)
     ax = 28 + measure("VIEW LIVE", "l6", 12, 2) + 6
     s.add(
         f'<g class="arr"><path d="M{ax:.1f} 281 l8 -8 M{ax + 2:.1f} 273 h6 v6" stroke="{ACCENT}" stroke-width="1.8" fill="none"/></g>'
     )
-    s.text(460, 281, url_label.upper(), "l5", 11, GHOST, ls=1.6, anchor="end")
+    s.text(w - 28, 281, url_label.upper(), "l5", 11, GHOST, ls=1.6, anchor="end")
     s.render(fname)
 
 
@@ -668,12 +686,10 @@ def main():
     about()
     stack()
     experience()
-    project("01", "afont/ui", "ui.afont.dev",
-            "My own UI component registry, installable straight into any project from the command line.",
-            ["React", "TypeScript", "shadcn/ui", "Tailwind"], "project-ui.svg")
-    project("02", "Fleetly", "fleetly.afont.dev",
-            "Company portal for internal fleet management, with a separate administration panel.",
-            ["TypeScript", "React", "PostgreSQL"], "project-fleetly.svg")
+    for i, (name, url, desc, tags, fname) in enumerate(PROJECTS):
+        featured = i == 0
+        project(f"{i + 1:02d}", name, url, desc, tags, fname,
+                w=1000 if featured else 488, kicker="CURRENT CLIENT WORK" if featured else "")
     contact()
     button("Email me", "btn-email.svg", True)
     button("afont.dev", "btn-web.svg", False)
