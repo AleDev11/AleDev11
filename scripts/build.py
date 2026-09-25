@@ -38,7 +38,7 @@ EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)"
 
 # Fechas de las que salen los contadores. La Action .github/workflows/readme.yml
 # vuelve a generar los SVG cada mes, asi que las cifras se actualizan solas.
-CAREER_START = date(2022, 10, 1)  # Tetravol
+CAREER_START = date(2021, 9, 1)  # inicio del grado DAM
 INFINI_START = date(2023, 7, 1)
 
 
