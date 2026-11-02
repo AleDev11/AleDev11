@@ -34,6 +34,7 @@ DIM = "#b0b0b0"
 FAINT = "#888888"
 GHOST = "#555555"
 GREEN = "#25d366"
+AMBER = "#ffb800"
 EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)"
 
 # Fechas de las que salen los contadores. La Action .github/workflows/readme.yml
@@ -620,6 +621,60 @@ def project(tag, name, url_label, desc, tags, fname, live=True, w=488, kicker=""
     s.render(fname)
 
 
+def education():
+    """Formacion y certificaciones, como la seccion Formacion de afont.dev."""
+    studies = [
+        ("SEP 2021 — MAY 2023", "Cross-platform App Development", "CAMPUSNET · HIGHER VOCATIONAL DEGREE (DAM)"),
+        ("SEP 2019 — JUN 2021", "Science & Technology Baccalaureate", "COL·LEGI PARE MANYANET LES CORTS"),
+    ]
+    certs = [
+        ("SQL Server", True),
+        ("Python Programming — Advanced", True),
+        ("AWS Cloud Practitioner", False),
+        ("Oracle Certified Java SE", False),
+        ("Google AI Essentials", False),
+        ("Professional Scrum Master I", False),
+    ]
+    row = 44
+    h = max(118 + len(studies) * 112, 118 + 40 + len(certs) * row) + 40
+    s = Svg(1000, h, "Education — Cross-platform App Development (DAM), CampusNet, 2021–2023. Certifications: "
+            + ", ".join(f"{n} ({'obtained' if d else 'in progress'})" for n, d in certs))
+    frame(s)
+    section_head(s, 48, 74, "Education")
+    s.css.append(
+        f"@keyframes ed{{from{{opacity:0;transform:translateY(12px)}}to{{opacity:1;transform:none}}}}"
+        f".ed{{animation:ed .8s {EASE_OUT} both}}"
+        "@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}.pend{animation:blink 2.4s ease-in-out infinite}"
+    )
+    # estudios: periodo, titulo y centro, con la barra naranja de los pilares del sitio
+    for i, (period, title, school) in enumerate(studies):
+        y = 118 + i * 112
+        s.add(f'<g class="ed" style="animation-delay:{0.3 + i * 0.15:.2f}s">')
+        s.add(f'<rect x="48" y="{y}" width="3" height="78" fill="{ACCENT if i == 0 else BORDER}"/>')
+        s.text(68, y + 16, period, "l6", 11.5, ACCENT, ls=2.2)
+        s.text(68, y + 48, title.upper(), "d9", 26, TEXT, ls=0.4)
+        s.text(68, y + 72, school, "l5", 10.5, FAINT, ls=1.6)
+        s.add("</g>")
+    # certificaciones
+    cx, cy = 560, 118
+    s.add(f'<line x1="{cx - 32}" y1="{cy}" x2="{cx - 32}" y2="{h - 40}" stroke="{BORDER_SOFT}"/>')
+    s.add('<g class="ed" style="animation-delay:.4s">')
+    s.text(cx, cy + 16, "CERTIFICATIONS", "l6", 11.5, FAINT, ls=2.2)
+    s.add("</g>")
+    for i, (name, done) in enumerate(certs):
+        y = cy + 40 + i * row
+        s.add(f'<g class="ed" style="animation-delay:{0.5 + i * 0.08:.2f}s">')
+        s.add(f'<rect x="{cx}" y="{y + 15}" width="6" height="6" fill="{ACCENT}"/>')
+        s.text(cx + 18, y + 23, name, "b5", 14, TEXT)
+        state = "OBTAINED" if done else "IN PROGRESS"
+        s.text(s.w - 48, y + 23, state, "l6", 10.5, GREEN if done else AMBER, ls=1.8, anchor="end",
+               cls="" if done else "pend")
+        if i < len(certs) - 1:
+            s.add(f'<line x1="{cx}" y1="{y + row - 4}" x2="{s.w - 48}" y2="{y + row - 4}" stroke="{BORDER_SOFT}" stroke-dasharray="2 4"/>')
+        s.add("</g>")
+    s.render("education.svg")
+
+
 def contact():
     s = Svg(1000, 300, "Got a project in mind? Let's talk — fontalejandro0@gmail.com")
     s.add(f'<rect width="{s.w}" height="{s.h}" fill="{ACCENT}"/>')
@@ -692,6 +747,7 @@ def main():
         featured = i == 0
         project(f"{i + 1:02d}", name, url, desc, tags, fname, live,
                 w=1000 if featured else 488, kicker="CURRENT CLIENT WORK" if featured else "")
+    education()
     contact()
     button("Email me", "btn-email.svg", True)
     button("afont.dev", "btn-web.svg", False)
