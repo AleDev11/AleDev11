@@ -367,12 +367,12 @@ PROJECTS = [
      "Website for a vehicle upholstery and restoration workshop in Tenerife: 3D seat configurator, "
      "live Google reviews, project gallery and instant quote requests.",
      ["Astro", "Bun", "Three.js", "Leaflet", "TypeScript"], "project-rax.svg", True),
-    ("afont/ui", "ui.afont.dev",
-     "My own UI component registry, installable straight into any project from the command line.",
-     ["React", "TypeScript", "shadcn/ui", "Tailwind"], "project-ui.svg", True),
     ("Meeting Notes", "github.com/AleDev11/meeting-notes",
      "Open-source desktop app that transcribes meetings, tells speakers apart and writes AI minutes.",
      ["Electron", "React", "TypeScript", "Claude"], "project-meeting-notes.svg", False),
+    ("Winkit", "github.com/AleDev11/winkit",
+     "Open-source Windows tools with Claude: fix, translate and search from any app with a shortcut.",
+     ["Electron", "React", "TypeScript", "Claude"], "project-winkit.svg", False),
 ]
 
 

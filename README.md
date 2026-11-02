@@ -22,8 +22,8 @@
 
 <a href="https://raxcustom.com"><img src="assets/project-rax.svg" width="100%" alt="01 · Rax Custom — Website for a vehicle upholstery and restoration workshop in Tenerife: 3D seat configurator, live Google reviews, project gallery and instant quote requests." /></a>
 
-<a href="https://ui.afont.dev"><img src="assets/project-ui.svg" width="49%" alt="02 · afont/ui — My own UI component registry, installable straight into any project from the command line." /></a>
-<a href="https://github.com/AleDev11/meeting-notes"><img src="assets/project-meeting-notes.svg" width="49%" alt="03 · Meeting Notes — Open-source desktop app that transcribes meetings, tells speakers apart and writes AI minutes." /></a>
+<a href="https://github.com/AleDev11/meeting-notes"><img src="assets/project-meeting-notes.svg" width="49%" alt="02 · Meeting Notes — Open-source desktop app that transcribes meetings, tells speakers apart and writes AI minutes." /></a>
+<a href="https://github.com/AleDev11/winkit"><img src="assets/project-winkit.svg" width="49%" alt="03 · Winkit — Open-source Windows tools with Claude: fix, translate and search from any app with a shortcut." /></a>
 
 <br />
 
