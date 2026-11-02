@@ -510,98 +510,109 @@ def experience():
 
 
 def stack():
+    """Las cinco areas, cada una con sus tecnologias en pildoras. IA y automatizacion, en naranja."""
     groups = [
-        ("Frontend", ["React", "Next.js", "Astro", "TypeScript", "Tailwind CSS", "Vue.js"]),
-        ("Backend", ["Bun", "Hono", "Node.js", "Java", "Spring Boot", "Python", "Odoo"]),
-        ("Data", ["PostgreSQL", "MongoDB", "Redis", "MySQL", "MinIO"]),
-        ("Cloud & tooling", ["AWS", "Cloudflare", "Docker", "Vercel", "Linux", "GraphQL"]),
-        ("AI & automation", ["AI agents", "RPA", "Process automation", "REST APIs"]),
+        ("AI & automation", "AI agents and automations that remove repetitive work.", ["AI agents", "RPA", "Process automation", "REST APIs"]),
+        ("Frontend", "Fast, accessible interfaces.", ["React", "Next.js", "Astro", "TypeScript", "Tailwind CSS", "Vue.js"]),
+        ("Backend", "Custom APIs and services.", ["Bun", "Hono", "Node.js", "Java", "Spring Boot", "Python", "Odoo"]),
+        ("Data", "Data models, search and storage.", ["PostgreSQL", "MongoDB", "Redis", "MySQL", "MinIO"]),
+        ("Cloud & tooling", "Deployment and infrastructure.", ["AWS", "Cloudflare", "Docker", "Vercel", "Linux", "GraphQL"]),
     ]
-    h = 600
-    s = Svg(W, h, "Stack — " + "; ".join(f"{g}: {', '.join(i)}" for g, i in groups))
+
+    def pills_height(items, width, size):
+        x, rows = 0, 1
+        for it in items:
+            w = measure(it, "b6", size) + size * 1.8
+            if x and x + w > width:
+                rows += 1
+                x = 0
+            x += w + 8
+        return rows * (size * 2.3 + 8)
+
+    def draw_pills(x0, y0, items, width, size, hot_first=False):
+        x, y = x0, y0
+        for k, it in enumerate(items):
+            w = measure(it, "b6", size) + size * 1.8
+            if x > x0 and x + w > x0 + width:
+                x = x0
+                y += size * 2.3 + 8
+            pill(s, x, y, it, hot=hot_first and k == 0, size=size)
+            x += w + 8
+
+    gap = 14
+    top = 110
+    # fila 1: IA a todo el ancho; filas 2 y 3: dos areas por fila, misma altura por fila
+    lead = groups[0]
+    lead_h = 96 + pills_height(lead[2], W - 2 * PAD - 52, 18)
+    half = (W - 2 * PAD - gap) / 2
+    rows = [groups[1:3], groups[3:5]]
+    row_h = [max(96 + pills_height(g[2], half - 52, 14) for g in r) for r in rows]
+    h = top + lead_h + gap + row_h[0] + gap + row_h[1] + 34
+    s = Svg(W, h, "Stack — " + "; ".join(f"{g}: {', '.join(i)}" for g, _, i in groups))
     base(s)
-    title(s, PAD, 76, [("My ", False), ("stack", True), (", in orbit", False)], 46)
-    # leyenda
-    y = 112
-    lw = 400
-    for gi, (label, items) in enumerate(groups):
-        lines = wrap(", ".join(items), "b4", 13.5, lw - 40)
-        bh = 44 + len(lines) * 19
-        s.add(f'<g class="fade" style="animation-delay:{0.2 + gi * 0.08:.2f}s">')
-        card(s, PAD, y, lw, bh, SURFACE, 20)
-        s.text(PAD + 20, y + 30, label, "d7", 19, ACCENT if gi == len(groups) - 1 else TEXT, ls=tight(19))
-        for k, line in enumerate(lines):
-            s.text(PAD + 20, y + 52 + k * 19, line, "b4", 13.5, MUTED)
-        s.add("</g>")
-        y += bh + 10
-    # sistema solar
-    cx, cy = 716, 340
-    s.defs.append(
-        f'<radialGradient id="sg"><stop offset=".4" stop-color="{ACCENT}" stop-opacity=".55"/>'
-        f'<stop offset="1" stop-color="{ACCENT}" stop-opacity="0"/></radialGradient>'
-    )
-    s.add(f'<circle cx="{cx}" cy="{cy}" r="110" fill="url(#sg)"/>')
-    orbit(s, cx, cy, 214, [("Java", -90, False), ("PostgreSQL", -45, False), ("AWS", 0, False), ("Python", 45, False),
-                           ("Cloudflare", 90, False), ("Docker", 135, False), ("Spring Boot", 180, False), ("Next.js", 225, False)], 46, reverse=True, size=12)
-    orbit(s, cx, cy, 130, [("RPA", 20, True), ("React", 110, False), ("Astro", 200, False), ("Bun", 290, False)], 30, size=12)
-    s.add(f'<circle class="breathe" cx="{cx}" cy="{cy}" r="62" fill="{ACCENT}"/>')
-    s.text(cx, cy - 4, "AI", "d8", 22, ON_ACCENT, anchor="middle")
-    s.text(cx, cy + 20, "agents", "d8", 22, ON_ACCENT, anchor="middle")
+    title(s, PAD, 76, [("My ", False), ("stack", True)], 46)
+
+    s.add('<g class="fade" style="animation-delay:.2s">')
+    card(s, PAD, top, W - 2 * PAD, lead_h, ACCENT, 26)
+    s.text(PAD + 26, top + 44, lead[0], "d8", 28, ON_ACCENT, ls=tight(28))
+    s.text(PAD + 26, top + 70, lead[1], "b5", 15, ON_ACCENT)
+    x, y = PAD + 26, top + 88
+    for it in lead[2]:
+        w = measure(it, "b6", 18) + 18 * 1.8
+        s.add(f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="41.4" rx="20.7" fill="{ON_ACCENT}"/>')
+        s.text(x + w / 2, y + 27, it, "b6", 18, ACCENT, anchor="middle")
+        x += w + 8
+    s.add("</g>")
+
+    y = top + lead_h + gap
+    for ri, r in enumerate(rows):
+        for ci, (label, note, items) in enumerate(r):
+            x = PAD + ci * (half + gap)
+            s.add(f'<g class="fade" style="animation-delay:{0.3 + (ri * 2 + ci) * 0.08:.2f}s">')
+            card(s, x, y, half, row_h[ri], SURFACE, 24)
+            s.text(x + 26, y + 42, label, "d8", 24, TEXT, ls=tight(24))
+            s.text(x + 26, y + 66, note, "b4", 14, MUTED)
+            draw_pills(x + 26, y + 82, items, half - 52, 14)
+            s.add("</g>")
+        y += row_h[ri] + gap
     s.render("stack.svg")
 
 
 def education():
-    studies = [
-        ("2021–2023", "Cross-platform App Development", "CampusNet · Higher Vocational Degree (DAM)"),
-        ("2019–2021", "Science & Technology Baccalaureate", "Col·legi Pare Manyanet Les Corts"),
+    """Tres tarjetas iguales: grado, bachillerato y certificaciones obtenidas."""
+    items = [
+        ("2021–2023", ["Cross-platform App", "Development (DAM)"], ["CampusNet", "Higher Vocational Degree"], True),
+        ("2019–2021", ["Science & Technology", "Baccalaureate"], ["Col·legi Pare Manyanet", "Les Corts"], False),
+        ("Certifications", ["SQL Server", "Python Programming", "(Advanced)"], ["Certifications obtained"], False),
     ]
-    certs = [
-        ("SQL Server", True),
-        ("Python Programming — Advanced", True),
-        ("AWS Cloud Practitioner", False),
-        ("Oracle Certified Java SE", False),
-        ("Google AI Essentials", False),
-        ("Professional Scrum Master I", False),
-    ]
-    h = 520
-    s = Svg(W, h, "Education — Cross-platform App Development (DAM), CampusNet, 2021–2023. Certifications: "
-            + ", ".join(f"{n} ({'obtained' if d else 'in progress'})" for n, d in certs))
+    h = 380
+    s = Svg(W, h, "Education — Cross-platform App Development (DAM), CampusNet, 2021–2023. Science and Technology "
+            "Baccalaureate, 2019–2021. Certifications: SQL Server, Advanced Python Programming.")
     base(s)
     title(s, PAD, 76, [("What I've ", False), ("studied", True)], 46)
-    colw = (W - 2 * PAD - 16) / 2
-    y = 110
-    for i, (years, ttl, school) in enumerate(studies):
-        lines = wrap(ttl, "d8", 30, colw - 50)
-        bh = 120 + len(lines) * 34
-        s.add(f'<g class="fade" style="animation-delay:{0.2 + i * 0.15:.2f}s">')
-        card(s, PAD, y, colw, bh, SURFACE, 26)
-        pill(s, PAD + 24, y + 24, years, soft=True, size=13)
-        for k, line in enumerate(lines):
-            s.text(PAD + 24, y + 100 + k * 34, line, "d8", 30, TEXT, ls=tight(30))
-        s.text(PAD + 24, y + bh - 24, school, "b4", 14, MUTED)
+    gap = 14
+    cw = (W - 2 * PAD - 2 * gap) / 3
+    top, ch = 110, h - 110 - 34
+    s.defs.append(
+        f'<linearGradient id="eg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{ACCENT}" stop-opacity=".22"/>'
+        f'<stop offset=".65" stop-color="{ACCENT}" stop-opacity="0"/></linearGradient>'
+    )
+    for i, (tag, ttl, foot, main_) in enumerate(items):
+        x = PAD + i * (cw + gap)
+        s.add(f'<g class="fade" style="animation-delay:{0.2 + i * 0.12:.2f}s">')
+        card(s, x, top, cw, ch, SURFACE, 26)
+        if main_:
+            card(s, x, top, cw, ch, "url(#eg)", 26)
+        pill(s, x + 24, top + 24, tag, soft=True, size=13)
+        for k, line in enumerate(ttl):
+            # en las certificaciones, la primera va separada: son dos titulos distintos
+            extra = 14 if (tag == "Certifications" and k > 0) else 0
+            s.text(x + 24, top + 104 + k * 30 + extra, line, "d8", 25, TEXT, ls=tight(25))
+        fy = top + ch - 26 - (len(foot) - 1) * 20
+        s.add(f'<rect x="{x + 24}" y="{fy - 32}" width="{cw - 48:.1f}" height="1" fill="{SURFACE_2}"/>')
+        for k, line in enumerate(foot):
+            s.text(x + 24, fy + k * 20, line, "b4", 14, MUTED)
         s.add("</g>")
-        y += bh + 14
-    cx = PAD + colw + 16
-    s.add('<g class="fade" style="animation-delay:.35s">')
-    card(s, cx, 110, colw, h - 110 - 30, SURFACE, 26)
-    s.text(cx + 24, 160, "Certifications", "d8", 28, TEXT, ls=tight(28))
-    done = sum(1 for _, d in certs if d)
-    import math
-    rx_, ry_, rr = cx + colw - 56, 150, 28
-    s.add(f'<circle cx="{rx_}" cy="{ry_}" r="{rr}" fill="none" stroke="{SURFACE_2}" stroke-width="9"/>')
-    circ = 2 * math.pi * rr
-    s.add(f'<circle cx="{rx_}" cy="{ry_}" r="{rr}" fill="none" stroke="{ACCENT}" stroke-width="9" stroke-linecap="round" '
-          f'stroke-dasharray="{circ * done / len(certs):.1f} {circ:.1f}" transform="rotate(-90 {rx_} {ry_})"/>')
-    s.text(rx_, ry_ + 6, f"{done}/{len(certs)}", "d8", 16, TEXT, anchor="middle")
-    for i, (name, d) in enumerate(certs):
-        yy = 200 + i * 46
-        card(s, cx + 20, yy, colw - 40, 38, SURFACE_2, 14)
-        s.text(cx + 36, yy + 25, name, "b5", 14, TEXT)
-        lab = "Obtained" if d else "In progress"
-        pw = measure(lab, "b6", 11) + 20
-        s.add(f'<rect x="{cx + colw - 28 - pw:.1f}" y="{yy + 8}" width="{pw:.1f}" height="22" rx="11" fill="{ACCENT if d else BG}"/>')
-        s.text(cx + colw - 28 - pw / 2, yy + 23, lab, "b6", 11, ON_ACCENT if d else TEXT, anchor="middle")
-    s.add("</g>")
     s.render("education.svg")
 
 

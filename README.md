@@ -25,7 +25,7 @@
 
 <br />
 
-<img src="assets/education.svg" width="100%" alt="Education — Cross-platform App Development (DAM), CampusNet, 2021–2023. Science and Technology Baccalaureate, 2019–2021. Certifications: SQL Server and Advanced Python Programming (obtained); AWS Cloud Practitioner, Oracle Certified Java SE, Google AI Essentials and Professional Scrum Master I (in progress)." />
+<img src="assets/education.svg" width="100%" alt="Education — Cross-platform App Development (DAM), CampusNet, 2021–2023. Science and Technology Baccalaureate, 2019–2021. Certifications: SQL Server and Advanced Python Programming." />
 
 <br />
 
