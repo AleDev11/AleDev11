@@ -271,9 +271,6 @@ def hero():
     s.add(f'<g clip-path="url(#hc)"><circle class="breathe" cx="{cx}" cy="{cy}" r="330" fill="url(#glow)"/></g>')
 
     # texto
-    s.add('<g class="fade" style="animation-delay:.05s">')
-    pill(s, PAD, 70, "Available for projects · Barcelona", size=14)
-    s.add("</g>")
     title(s, PAD, 200, [("Alejandro", False)], 92, delay=0.15)
     title(s, PAD, 290, [("Font", True), (" Muñiz", False)], 92, delay=0.25)
     s.add('<g class="fade" style="animation-delay:.45s">')
@@ -287,22 +284,9 @@ def hero():
     s.add("</g>")
 
     # retrato redondo con un anillo de tecnologias y un sello
-    s.defs.append(f'<clipPath id="pc"><circle cx="{cx}" cy="{cy}" r="140"/></clipPath>')
-    s.add(f'<g class="fade" style="animation-delay:.2s"><image x="{cx - 150}" y="{cy - 160}" width="300" height="300" '
+    s.defs.append(f'<clipPath id="pc"><circle cx="{cx}" cy="{cy}" r="170"/></clipPath>')
+    s.add(f'<g class="fade" style="animation-delay:.2s"><image x="{cx - 180}" y="{cy - 190}" width="360" height="360" '
           f'preserveAspectRatio="xMidYMid slice" clip-path="url(#pc)" href="{jpeg("me.jpg")}"/></g>')
-    orbit(s, cx, cy, 186, [("AI agents", -40, True), ("Astro", 50, False), ("React", 140, False), ("RPA", 225, False)], 36)
-    sx, sy = cx - 150, cy + 126
-    s.defs.append(f'<path id="sp" d="M{sx},{sy} m-40,0 a40,40 0 1,1 80,0 a40,40 0 1,1 -80,0"/>')
-    s.add(f'<circle cx="{sx}" cy="{sy}" r="56" fill="{BG}"/>')
-    s.add(f'<g class="spin" style="transform-origin:{sx}px {sy}px;animation-duration:18s">')
-    years = months_since(CAREER_START) // 12
-    seal = f"+{years} years building software · since 2021 · "
-    s.use("b6", seal)
-    s.add(f'<text font-family="b6" font-size="10" letter-spacing="1.6" fill="{TEXT}"><textPath href="#sp">{esc(seal.upper())}</textPath></text>')
-    s.use("b6", seal.upper())
-    s.add("</g>")
-    s.add(f'<circle cx="{sx}" cy="{sy}" r="22" fill="{ACCENT}"/>')
-    s.text(sx, sy + 7, "↘", "b6", 20, ON_ACCENT, anchor="middle")
     s.render("hero.svg")
 
 
