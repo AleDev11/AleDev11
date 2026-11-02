@@ -359,18 +359,19 @@ def marquee(items, name, fill, fg, sep, reverse=False, h=62, size=26, speed=34):
     s.render(name)
 
 
-# Proyectos en vivo. El primero sale como tarjeta destacada a todo el ancho.
+# Proyectos publicados. El primero sale como tarjeta destacada a todo el ancho.
+# El ultimo campo dice si es una web en vivo (True) o un repo open source (False).
 PROJECTS = [
     ("Rax Custom", "raxcustom.com",
      "Website for a vehicle upholstery and restoration workshop in Tenerife: 3D seat configurator, "
      "live Google reviews, project gallery and instant quote requests.",
-     ["Astro", "Bun", "Three.js", "Leaflet", "TypeScript"], "project-rax.svg"),
+     ["Astro", "Bun", "Three.js", "Leaflet", "TypeScript"], "project-rax.svg", True),
     ("afont/ui", "ui.afont.dev",
      "My own UI component registry, installable straight into any project from the command line.",
-     ["React", "TypeScript", "shadcn/ui", "Tailwind"], "project-ui.svg"),
-    ("Fleetly", "fleetly.afont.dev",
-     "Company portal for internal fleet management, with a separate administration panel.",
-     ["TypeScript", "React", "PostgreSQL"], "project-fleetly.svg"),
+     ["React", "TypeScript", "shadcn/ui", "Tailwind"], "project-ui.svg", True),
+    ("Meeting Notes", "github.com/AleDev11/meeting-notes",
+     "Open-source desktop app that transcribes meetings, tells speakers apart and writes AI minutes.",
+     ["Electron", "React", "TypeScript", "Claude"], "project-meeting-notes.svg", False),
 ]
 
 
@@ -400,8 +401,8 @@ def odometer(s, x, y, value, size, step, cls, style, delay):
 
 def stats():
     years = months_since(CAREER_START) // 12
-    data = [(f"+{years}", "YEARS BUILDING SOFTWARE"), (str(len(PROJECTS)), "PROJECTS LIVE"), ("3", "LANGUAGES · ES · EN · CA")]
-    s = Svg(1000, 132, f"+{years} years building software · {len(PROJECTS)} projects live · 3 languages")
+    data = [(f"+{years}", "YEARS BUILDING SOFTWARE"), (str(len(PROJECTS)), "PROJECTS SHIPPED"), ("3", "LANGUAGES · ES · EN · CA")]
+    s = Svg(1000, 132, f"+{years} years building software · {len(PROJECTS)} projects shipped · 3 languages")
     s.add(f'<rect width="{s.w}" height="{s.h}" fill="{BORDER}"/>')
     cw = (s.w - 2 - 2) / 3
     s.css.append(
@@ -571,7 +572,8 @@ def experience():
     s.render("experience.svg")
 
 
-def project(tag, name, url_label, desc, tags, fname, w=488, kicker=""):
+def project(tag, name, url_label, desc, tags, fname, live=True, w=488, kicker=""):
+    status, cta = ("LIVE", "VIEW LIVE") if live else ("OPEN SOURCE", "VIEW CODE")
     s = Svg(w, 300, f"{name} — {desc}")
     frame(s, fill=BG_ALT)
     s.css.append(
@@ -597,8 +599,8 @@ def project(tag, name, url_label, desc, tags, fname, w=488, kicker=""):
     s.text(kx, 49, "///", "d9", 16, ACCENT_DEEP, ls=-0.8)
     if kicker:
         s.text(kx + measure("///", "d9", 16, -0.8) + 10, 48, kicker, "l6", 11, FAINT, ls=2)
-    s.add(f'<circle class="dot" cx="{w - 28 - measure("LIVE", "l5", 11, 1.8) - 12}" cy="45" r="4" fill="{GREEN}"/>')
-    s.text(w - 28, 49, "LIVE", "l5", 11, DIM, ls=1.8, anchor="end")
+    s.add(f'<circle class="dot" cx="{w - 28 - measure(status, "l5", 11, 1.8) - 12}" cy="45" r="4" fill="{GREEN}"/>')
+    s.text(w - 28, 49, status, "l5", 11, DIM, ls=1.8, anchor="end")
     s.text(28, 112, name.upper(), "d9", 48, TEXT, ls=0.4)
     y = 146
     for l in wrap(desc, "b4", 14.5, min(w - 68, 620)):
@@ -609,8 +611,8 @@ def project(tag, name, url_label, desc, tags, fname, w=488, kicker=""):
     for i, t in enumerate(tags):
         x += chip(s, x, 206, t, delay=0.4 + i * 0.08, wave=1.2 + i * 0.3) + 8
     s.add(f'<line x1="28" y1="256" x2="{w - 28}" y2="256" stroke="{BORDER}"/>')
-    s.text(28, 281, "VIEW LIVE", "l6", 12, ACCENT, ls=2)
-    ax = 28 + measure("VIEW LIVE", "l6", 12, 2) + 6
+    s.text(28, 281, cta, "l6", 12, ACCENT, ls=2)
+    ax = 28 + measure(cta, "l6", 12, 2) + 6
     s.add(
         f'<g class="arr"><path d="M{ax:.1f} 281 l8 -8 M{ax + 2:.1f} 273 h6 v6" stroke="{ACCENT}" stroke-width="1.8" fill="none"/></g>'
     )
@@ -686,9 +688,9 @@ def main():
     about()
     stack()
     experience()
-    for i, (name, url, desc, tags, fname) in enumerate(PROJECTS):
+    for i, (name, url, desc, tags, fname, live) in enumerate(PROJECTS):
         featured = i == 0
-        project(f"{i + 1:02d}", name, url, desc, tags, fname,
+        project(f"{i + 1:02d}", name, url, desc, tags, fname, live,
                 w=1000 if featured else 488, kicker="CURRENT CLIENT WORK" if featured else "")
     contact()
     button("Email me", "btn-email.svg", True)
