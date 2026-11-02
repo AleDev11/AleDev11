@@ -1,16 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="120" height="52" viewBox="0 0 120 52" role="img" aria-label="LinkedIn">
+<svg xmlns="http://www.w3.org/2000/svg" width="133" height="52" viewBox="0 0 133 52" role="img" aria-label="LinkedIn">
 <title>LinkedIn</title>
 <defs>
 <style>
-@font-face{font-family:'l6';src:url(data:font/woff2;base64,d09GMgABAAAAAAMYABAAAAAABqgAAAK8AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbgQIcKgZgP1NUQVQqAFQRCAqCCIFYATYCJAMgCxIABCAFhAwHIAwHG0wFERWcOyF+HtjGwkejphqFQbTsrdfzNq+pFGJpLH2f8G88POlBvT+ZhZUls1RF8FRZFcASKq+FKiEAjvQspuXHkO3k1b5AFxBVuArIzI92wcz/zbQ2bsC+JRRYwIl8ak3BLEujAZhgoOPWBl+g907gAO8dTRA59dZRhGfq3/WrmxeoD0hCqCkE6upuiDR1+twFGu5Ye2CXhjL8r0Bs37hvl9oIhCypLdSWdJbRzxhZAgAQspBkNVb7QCEVoe6pN916OwByfJLOapCuicicNrHKkFgOTPgj7Np4+IC3dTY/P/nfN2r0j6MISJOLEp0VQqgt0FygvXR485YDAUlA1EhLQEKB5gqB5rKJqK+2JOtsmlnmmv+/6GyqWeY4Xt57w6te8XIBAEL8r0agNmiMWpiKhYD8iUSY9TE5169Zt16tete//FI688UXdY9W7rWHozj70Kt1qbSBuupt0Izq1ZR8Wl5vydK6y/olcTIRLi0m9F0+VeWHbj5s4J4lvZYN3L9nxMbu+7oN2HFHOb981+W6qsq1+17/+rbitv/eTE0oHylV5aOLblv4wO3bH3rjsRPb7q2a9SoPT8fc/9yjj10pdz331ttAILdddUvzX/hXo3G/1i6Kb+HL7x+AflhF6lSUqCmB4NuidF8AUqdBgFWbfDILUqWKF1XR1YTUWxXPqFKp8pdAba0lELCsjn0KkevgKSYIHT0FkoY+BoVhvirnMFDDoqgr1dQx1siC+nEKietqHNdkM0y73He9kiiSbJC9B2RVNJ/oT9Y5BvAryaQqPcwLQnllmRYjUXT90VV9hR/GxH0R3QgcTMpCTOgttY4uo2sHsT9F5yNuwa2iT64JsqSOE2jK8SXKPHpM88JPWiX6u7hOiRgVN0mwBVUV/lBbrCspNsi281DkpD99MZ0MoeUeSvbCxafzAAAA) format('woff2');}
+@font-face{font-family:'b5';src:url(data:font/woff2;base64,d09GMgABAAAAAAQMABAAAAAAB9gAAAOyAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhwbgWYcKgZgP1NUQVREAGQRCAqDSIJ6ATYCJAMsCxgABCAFg1wHIAwHG14GCC4HbCJT4asiDCgZ8ooYhkUdEYhsv/8uGg/B3KPvLvlQArZIZKtJAdCmASUA2Mm5zi4/v+beCSI+RPWG2jSd+h8moRAiXpJJiDSyZch0oKHioqmbbdGnqMsjKYM0CzihsUDC/9q4ee7+B0iHnceF/0nvjjb/59JV0N4At08wm/DEKmh81VZhUYQnWmDDO4Gmo5FdAFnvzubgsLJoDbOWlsPLEmgNSCnUhIamEGhpvCHk7Llza5C/a9vRIH+fw6uQf5hGBuQjofoLxKE9jgGxCIRSakotDYVprUToCBMaUlGprJRmIrGSJEqNassBDNSx6sJVqRagL/3amfg7VRsABdfcQC6UsEUKKfIpuVD4Lo3VwMP6yQHJXIuEocymeKNGXiDWA4vGCBBbtcU0AOThr61dSc3Bk/6M4t///6CcHnUgIDvnp+gvXghNic5wDIaf2ychDAdO0xo2FKbUHgbRO96gEDKqAQIkCnRGCHRGWg60l4pAf9Pm8GQqoyIQ3BL3nnc8cLcq3S6AYufq2oFWoCvQEueAF2hdLNV2UlYXQiDKmIy23RtlYm7ZKioBbnKljR0XsizI81anPN6KjPe9nUgXUR5ksGUJdv6XyXRK6+q0wiogvv+8sY2sNvNkLx5utXpD/NrVwOXXu17Fe3XZkjjWP7Hrz23RCtZ+evjTbj/uq1d2iWnl3U117K2vd+6xlLd7vTHwf/DTXblsY6ClYFP9LVjVN9Bv5Q03fZbx+2ZZqGy19Dg1sL+2NrBneuem9DHurwQLDoglC+dHmj/MI/XOC3ZCn3PblhNzqe7e+RMw21nJhNlPD77fMaLit0ny9bhl1wm2qDNNXPaVfvOK6yYv7ajZ2OdTupqn/cAKc6Ynu6B2u2IoAENFo65lPyQsAN7NrwTi629uTHjsbWs3+b9mQfzAP6/2rmqVukpO1GymLkHwh0HuWIIy1HPIpbfKgJrozpfz+HK7upyuLlgQLModZnOZWX9gJAytDIBrSgEAUqCVCwpRxgH34UDo7hSktt4BhbHe5stVUNPTr1jXPVq3YKB1VABciLfAVfjAdVWLjykUk2WbQyaSIB5tWrTp4LFGwvOYxJO5EI8lDpOCx0I8RkUgEpPD5VFDgiAWV59mzUQyho9gNGGZdM028BwsnpYsp6iNBCYDUut/6/N4HFmEbgVPFKGhOVo16dGiRT+fFZQ5/RbSRt8HMZfsNucxGU8J+60nDchPaBpC08hYK0w6moEAKq2JSP17UbXyMg==) format('woff2');}
 text{font-kerning:normal}
-@keyframes sh{0%,70%{transform:translateX(-80px)}100%{transform:translateX(198px)}}.sh{animation:sh 3.5s ease-in-out infinite}
+
 @media (prefers-reduced-motion: reduce){*{animation:none!important}}
 </style>
-<clipPath id="bc"><rect x="1" y="1" width="118.3" height="50" rx="6"/></clipPath>
-<linearGradient id="shg"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+
 </defs>
-<rect x="2" y="2" width="116.3" height="48" rx="6" fill="#0a0a0a" stroke="#ff6b00" stroke-width="2"/>
-<g clip-path="url(#bc)"><rect class="sh" x="0" y="0" width="60" height="52" fill="url(#shg)" transform="skewX(-20)"/></g>
-<text x="60.1" y="31.0" font-family="l6" font-size="13" fill="#ff6b00" letter-spacing="1.30" text-anchor="middle">LINKEDIN</text>
+<rect width="133" height="52" fill="#0b0b0b"/>
+<text x="22.0" y="31.0" font-family="b5" font-size="15" fill="#f2f2f2">LinkedIn</text>
+<text x="115.0" y="31.0" font-family="b5" font-size="15" fill="#ff6b00" text-anchor="end">↗</text>
 </svg>

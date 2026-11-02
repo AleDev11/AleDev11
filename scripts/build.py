@@ -1,11 +1,15 @@
-"""Genera los SVG animados del README a partir del estilo de afont.dev.
+"""Genera los SVG animados del README con el estilo de afont.dev ("Losa").
 
 Uso:  pip install fonttools brotli  &&  python scripts/build.py
 Salida: assets/*.svg
 
 GitHub no permite CSS ni JS en el README, pero si SVG con animaciones CSS
-dentro. Las fuentes se incrustan (recortadas a los caracteres usados) porque
-un SVG servido como <img> no puede cargar nada externo.
+dentro. Las fuentes y las imagenes se incrustan (las fuentes recortadas a los
+caracteres usados) porque un SVG servido como <img> no puede cargar nada externo.
+
+El estilo: brutal por escala y contraste, no por cajas. Grotesca muy pesada con
+las letras juntas, imagenes a sangre, franjas naranjas macizas y lineas finas.
+Sin sombras, sin bordes gruesos, sin etiquetas en mayusculas espaciadas.
 """
 
 import base64
@@ -20,22 +24,18 @@ ROOT = Path(__file__).resolve().parent
 OUT = ROOT.parent / "assets"
 
 # ---- tokens (src/styles/global.css de afont.dev) ----
-BG = "#0a0a0a"
-BG_ALT = "#111111"
-BORDER = "#2a2a2a"
-BORDER_SOFT = "#1f1f1f"
+BG = "#0b0b0b"
+LINE = "#262626"
 ACCENT = "#ff6b00"
-ACCENT_DARK = "#cc4e00"
-ACCENT_DEEP = "#7a2e00"
-ACCENT_LIGHT = "#ff8a2b"
-TEXT = "#ffffff"
-MUTED = "#cccccc"
-DIM = "#b0b0b0"
-FAINT = "#888888"
-GHOST = "#555555"
-GREEN = "#25d366"
-AMBER = "#ffb800"
+ON_ACCENT = "#0b0b0b"
+TEXT = "#f2f2f2"
+MUTED = "#b5b5b5"
+FAINT = "#8a8a8a"
+GHOST = "#5c5c5c"
 EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)"
+EASE_IN_OUT = "cubic-bezier(0.76, 0, 0.24, 1)"
+W = 1000
+PAD = 40
 
 # Fechas de las que salen los contadores. La Action .github/workflows/readme.yml
 # vuelve a generar los SVG cada mes, asi que las cifras se actualizan solas.
@@ -50,17 +50,18 @@ def months_since(start, today=None):
 
 def duration(start):
     y, m = divmod(months_since(start), 12)
-    parts = ([f"{y} YR" + ("S" if y != 1 else "")] if y else []) + ([f"{m} MO" + ("S" if m != 1 else "")] if m else [])
-    return " ".join(parts) or "1 MO"
+    parts = ([f"{y} yr" + ("s" if y != 1 else "")] if y else []) + ([f"{m} mo" + ("s" if m != 1 else "")] if m else [])
+    return " ".join(parts) or "1 mo"
 
 
 FONTS = {
-    "d9": "barlow-condensed-latin-900-normal.woff2",
-    "d8": "barlow-condensed-latin-800-normal.woff2",
-    "l6": "oswald-latin-600-normal.woff2",
-    "l5": "oswald-latin-500-normal.woff2",
-    "b4": "inter-latin-400-normal.woff2",
-    "b5": "inter-latin-500-normal.woff2",
+    "d9": "schibsted-grotesk-latin-900-normal.woff2",
+    "d8": "schibsted-grotesk-latin-800-normal.woff2",
+    "d7": "schibsted-grotesk-latin-700-normal.woff2",
+    "b4": "geist-latin-400-normal.woff2",
+    "b5": "geist-latin-500-normal.woff2",
+    "m4": "geist-mono-latin-400-normal.woff2",
+    "m5": "geist-mono-latin-500-normal.woff2",
 }
 _font_cache = {}
 
@@ -69,6 +70,11 @@ def font(key):
     if key not in _font_cache:
         _font_cache[key] = TTFont(ROOT / "fonts" / FONTS[key])
     return _font_cache[key]
+
+
+def tight(size, k=0.055):
+    """Espaciado negativo de los titulares, en px para el tamaño dado."""
+    return -k * size
 
 
 def measure(text, key, size, ls=0.0):
@@ -80,11 +86,11 @@ def measure(text, key, size, ls=0.0):
     return w * size / upm + ls * len(text)
 
 
-def wrap(text, key, size, maxw):
+def wrap(text, key, size, maxw, ls=0.0):
     lines, cur = [], ""
     for word in text.split():
         nxt = f"{cur} {word}".strip()
-        if cur and measure(nxt, key, size) > maxw:
+        if cur and measure(nxt, key, size, ls) > maxw:
             lines.append(cur)
             cur = word
         else:
@@ -96,6 +102,10 @@ def wrap(text, key, size, maxw):
 
 def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def jpeg(name):
+    return "data:image/jpeg;base64," + base64.b64encode((ROOT / name).read_bytes()).decode()
 
 
 class Svg:
@@ -115,6 +125,18 @@ class Svg:
         self.body.append(
             f'<text x="{x:.1f}" y="{y:.1f}" font-family="{key}" font-size="{size}" '
             f'fill="{fill}"{l}{a}{c}{extra}>{esc(s)}</text>'
+        )
+
+    def runs(self, x, y, parts, key, size, ls=0.0):
+        """Una linea con tramos de distinto color: [(texto, color), ...]."""
+        spans = []
+        for t, color in parts:
+            self.use(key, t)
+            spans.append(f'<tspan fill="{color}">{esc(t)}</tspan>')
+        l = f' letter-spacing="{ls:.2f}"' if ls else ""
+        self.body.append(
+            f'<text x="{x:.1f}" y="{y:.1f}" font-family="{key}" font-size="{size}"{l} xml:space="preserve">'
+            + "".join(spans) + "</text>"
         )
 
     def add(self, s):
@@ -154,475 +176,329 @@ class Svg:
             + "\n</svg>\n"
         )
         (OUT / name).write_text(svg, encoding="utf-8")
-        print(f"  {name:22} {len(svg) / 1024:6.1f} KB")
+        print(f"  {name:24} {len(svg) / 1024:6.1f} KB")
 
 
 # ---------- piezas reutilizables ----------
 
-def frame(s, fill=BG, stroke=BORDER):
-    s.add(f'<rect x="0.5" y="0.5" width="{s.w - 1}" height="{s.h - 1}" fill="{fill}" stroke="{stroke}"/>')
+ANIM = (
+    f"@keyframes up{{from{{transform:translateY(110%)}}to{{transform:none}}}}"
+    f".up{{transform-box:fill-box;animation:up 1.1s {EASE_OUT} both}}"
+    f"@keyframes fade{{from{{opacity:0;transform:translateY(10px)}}to{{opacity:1;transform:none}}}}"
+    f".fade{{animation:fade .9s {EASE_OUT} both}}"
+    f"@keyframes draw{{from{{transform:scaleX(0)}}to{{transform:scaleX(1)}}}}"
+    f".draw{{transform-box:fill-box;transform-origin:left;animation:draw 1.4s {EASE_OUT} both}}"
+)
 
 
-def grid(s, id_="g", step=40, opacity=0.045):
-    s.defs.append(
-        f'<pattern id="{id_}" width="{step}" height="{step}" patternUnits="userSpaceOnUse">'
-        f'<path d="M {step} 0 L 0 0 0 {step}" fill="none" stroke="#fff" stroke-opacity="{opacity}"/></pattern>'
-        f'<linearGradient id="{id_}f" x1="0" y1="0" x2="1" y2="1">'
-        f'<stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
-        f'<mask id="{id_}m"><rect width="{s.w}" height="{s.h}" fill="url(#{id_}f)"/></mask>'
-    )
-    s.add(f'<rect width="{s.w}" height="{s.h}" fill="url(#{id_})" mask="url(#{id_}m)"/>')
+def base(s, fill=BG):
+    s.css.append(ANIM)
+    s.add(f'<rect width="{s.w}" height="{s.h}" fill="{fill}"/>')
 
 
-def section_head(s, x, y, title, delay=0.0):
-    """Titulo de seccion como .section-head del sitio: titulo grande y linea gruesa."""
-    s.css.append(
-        f"@keyframes hd{{from{{opacity:0;transform:translateY(14px)}}to{{opacity:1;transform:none}}}}"
-        f".hd{{animation:hd .8s {EASE_OUT} both}}"
-    )
-    s.add(f'<g class="hd" style="animation-delay:{delay}s">')
-    s.text(x, y, title.upper(), "d9", 44, TEXT, ls=0.4)
-    lx = x + measure(title.upper(), "d9", 44, 0.4) + 22
-    s.add(f'<rect x="{lx:.0f}" y="{y - 16}" width="{s.w - x - lx:.0f}" height="3" fill="{BORDER}"/>')
+def label_row(s, y, left, right=""):
+    """Cabecera de seccion: linea fina y la etiqueta en mono, como .section-label."""
+    s.add(f'<rect x="{PAD}" y="{y}" width="{s.w - 2 * PAD}" height="1" fill="{LINE}"/>')
+    s.add('<g class="fade">')
+    s.text(PAD, y + 26, left, "m4", 13, FAINT)
+    if right:
+        s.text(s.w - PAD, y + 26, right, "m4", 13, FAINT, anchor="end")
     s.add("</g>")
 
 
-def chip(s, x, y, label, delay=0.0, wave=None):
-    """Chip del sitio. `delay` es la entrada; `wave` el retardo de la ola naranja."""
-    label = label.upper()
-    ls = 1.4
-    w = measure(label, "l5", 11.5, ls) + 24 - ls
-    wv = f' style="animation-delay:{delay if wave is None else wave:.2f}s"'
-    s.add(f'<g class="chip" style="animation-delay:{delay:.2f}s">')
-    s.add(f'<rect class="cr"{wv} x="{x:.1f}" y="{y}" width="{w:.1f}" height="30" rx="4" fill="{BG}" stroke="{BORDER}"/>')
-    s.text(x + 12, y + 19.5, label, "l5", 11.5, DIM, ls=ls, cls="ct", extra=wv)
-    s.add("</g>")
-    return w
-
-
-def chip_css(s, cycle):
-    s.css.append(
-        f"@keyframes cin{{from{{opacity:0;transform:translateY(8px)}}to{{opacity:1;transform:none}}}}"
-        f"@keyframes chl{{0%,6%,100%{{stroke:{BORDER};fill:{BG}}}2%,4%{{stroke:{ACCENT};fill:#2a1405}}}}"
-        f"@keyframes cth{{0%,6%,100%{{fill:{DIM}}}2%,4%{{fill:{TEXT}}}}}"
-        f".chip{{animation:cin .6s {EASE_OUT} both}}"
-        f".chip .cr{{animation:chl {cycle}s linear infinite}}"
-        f".chip .ct{{animation:cth {cycle}s linear infinite}}"
-    )
+def rising_lines(s, x, y0, lines, key, size, fill, step, delay=0.1, cid="l"):
+    """Titular que entra linea a linea desde una mascara. lines: str o [(texto, color)]."""
+    for i, line in enumerate(lines):
+        top = y0 + i * step - size
+        s.defs.append(f'<clipPath id="{cid}{i}"><rect x="0" y="{top - size * 0.08:.0f}" width="{s.w}" height="{size * 1.24:.0f}"/></clipPath>')
+        s.add(f'<g clip-path="url(#{cid}{i})"><g class="up" style="animation-delay:{delay + i * 0.09:.2f}s">')
+        if isinstance(line, str):
+            s.text(x, y0 + i * step, line, key, size, fill, ls=tight(size, 0.06))
+        else:
+            s.runs(x, y0 + i * step, line, key, size, ls=tight(size, 0.06))
+        s.add("</g></g>")
 
 
 # ---------- secciones ----------
 
 def hero():
-    s = Svg(1000, 460, "Alejandro Font Muñiz — Software Developer · Barcelona")
-    frame(s)
-    grid(s)
-    s.defs.append(
-        f'<radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">'
-        f'<stop offset="0" stop-color="{ACCENT}" stop-opacity="0.22"/>'
-        f'<stop offset="1" stop-color="{ACCENT}" stop-opacity="0"/></radialGradient>'
-    )
+    h = 540
+    s = Svg(W, h, "Alejandro Font Muñiz — Software developer, Barcelona")
+    base(s)
     s.css.append(
-        "@keyframes glow{0%,100%{opacity:.55}50%{opacity:1}}"
-        ".glow{animation:glow 6s ease-in-out infinite}"
-        f"@keyframes up{{from{{transform:translateY(130px)}}to{{transform:none}}}}"
-        f".up{{animation:up 1.1s {EASE_OUT} both}}"
-        f"@keyframes fade{{from{{opacity:0;transform:translateY(10px)}}to{{opacity:1;transform:none}}}}"
-        f".fade{{animation:fade .9s {EASE_OUT} both}}"
-        f"@keyframes grow{{from{{transform:scaleX(0)}}to{{transform:scaleX(1)}}}}"
-        f".rule{{transform-box:fill-box;transform-origin:left;animation:grow .9s {EASE_OUT} 1s both}}"
-        f"@keyframes badge{{from{{opacity:0;transform:translateY(16px)}}to{{opacity:1;transform:none}}}}"
-        f".badge > *{{animation:badge .8s {EASE_OUT} 1.3s both}}"
-        f"@keyframes photo{{from{{opacity:0;transform:scale(1.08)}}to{{opacity:1;transform:none}}}}"
-        f".photo{{transform-box:fill-box;transform-origin:center;animation:photo 1.4s {EASE_OUT} .4s both}}"
-        "@keyframes run{to{stroke-dashoffset:-1080}}"
-        ".run{animation:run 7s linear infinite}"
+        f"@keyframes ph{{from{{transform:scale(1.08)}}to{{transform:none}}}}"
+        f".ph{{transform-box:fill-box;transform-origin:center;animation:ph 1.8s {EASE_OUT} both}}"
+        f"@keyframes cur{{from{{transform:scaleY(1)}}to{{transform:scaleY(0)}}}}"
+        f".cur{{transform-box:fill-box;transform-origin:top;animation:cur 1.1s {EASE_IN_OUT} .2s both}}"
     )
-    s.add(f'<circle class="glow" cx="860" cy="70" r="360" fill="url(#glow)"/>')
-
-    x = 56
-    # kicker
-    s.add('<g class="fade" style="animation-delay:.1s">')
-    s.text(x, 91, "SOFTWARE DEVELOPER · BARCELONA, SPAIN", "l6", 13, DIM, ls=2.3)
-    s.add("</g>")
-
-    # nombre, cada linea sube desde su mascara como en el hero del sitio
-    s.defs.append('<clipPath id="l1"><rect x="0" y="100" width="640" height="112"/></clipPath>')
-    s.defs.append('<clipPath id="l2"><rect x="0" y="212" width="640" height="116"/></clipPath>')
-    s.add('<g clip-path="url(#l1)">')
-    s.text(x - 4, 205, "ALEJANDRO", "d9", 128, TEXT, ls=-2.5, cls="up", extra=' style="animation-delay:.25s"')
-    s.add("</g>")
-    s.use("d9", "FONT MUÑIZ")
-    s.add(
-        f'<g clip-path="url(#l2)"><text class="up" style="animation-delay:.4s" x="{x - 4}" y="322" '
-        f'font-family="d9" font-size="128" letter-spacing="-2.5" fill="{TEXT}">'
-        f'<tspan fill="{ACCENT}">FONT</tspan> MUÑIZ</text></g>'
-    )
-
-    s.add(f'<rect class="rule" x="{x}" y="348" width="120" height="4" fill="{ACCENT}"/>')
-
-    # palabra rotatoria
+    # foto a sangre, mitad derecha, destapada por una cortina
+    px = W // 2
+    s.defs.append(f'<clipPath id="pc"><rect x="{px}" y="0" width="{W - px}" height="{h}"/></clipPath>')
+    s.add(f'<g clip-path="url(#pc)"><image class="ph" x="{px}" y="-30" width="{W - px}" height="{W - px + 40}" '
+          f'preserveAspectRatio="xMidYMid slice" href="{jpeg("me.jpg")}"/></g>')
+    s.add(f'<rect class="cur" x="{px}" y="0" width="{W - px}" height="{h}" fill="{BG}"/>')
+    # etiqueta "available"
+    lab = "Available for projects"
+    lw = measure(lab, "m4", 13) + 24
     s.add('<g class="fade" style="animation-delay:1.2s">')
-    s.text(x, 402, "I BUILD", "l6", 14, FAINT, ls=2.5)
-    words = ["WEB APPS", "MANAGEMENT PLATFORMS", "AI AGENTS", "RPA AUTOMATIONS"]
-    wx = x + measure("I BUILD", "l6", 14, 2.5) + 14
-    step = 40
-    n = len(words)
-    kf = []
-    for i in range(n):
-        a, b = i * 100 / n, (i + 1) * 100 / n
-        kf.append(f"{a:.2f}%,{b - 4:.2f}%{{transform:translateY({-i * step}px)}}")
-    kf.append(f"100%{{transform:translateY({-n * step}px)}}")
-    s.css.append(
-        "@keyframes rot{" + "".join(kf) + "}"
-        f".rot{{animation:rot 12s {EASE_OUT} 1.8s infinite}}"
-    )
-    s.defs.append(f'<clipPath id="slot"><rect x="{wx - 4:.0f}" y="375" width="460" height="38"/></clipPath>')
-    s.add('<g clip-path="url(#slot)"><g class="rot">')
-    for i, w in enumerate(words + words[:1]):
-        s.text(wx, 405 + i * step, w, "d8", 30, ACCENT, ls=0.6)
-    s.add("</g></g></g>")
+    s.add(f'<rect x="{px + 18}" y="{h - 52}" width="{lw:.0f}" height="32" fill="{BG}"/>')
+    s.text(px + 30, h - 31, lab, "m4", 13, TEXT)
+    s.add("</g>")
 
-    # retrato
-    img = base64.b64encode((ROOT / "me.jpg").read_bytes()).decode()
-    px, py, pw = 694, 70, 250
-    s.defs.append(f'<clipPath id="pf"><rect x="{px}" y="{py}" width="{pw}" height="{pw + 20}"/></clipPath>')
-    s.defs.append(
-        '<linearGradient id="shade" x1="0" y1="0" x2="0" y2="1">'
-        f'<stop offset=".55" stop-color="{BG}" stop-opacity="0"/><stop offset="1" stop-color="{BG}" stop-opacity=".55"/></linearGradient>'
-    )
-    # sombra dura naranja desplazada, sin difuminar
-    s.add(f'<rect x="{px + 12}" y="{py + 12}" width="{pw}" height="{pw + 20}" fill="{ACCENT}"/>')
-    s.add(f'<rect x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="{BG_ALT}"/>')
-    s.add(
-        f'<g clip-path="url(#pf)"><image class="photo" x="{px - 10}" y="{py}" width="{pw + 20}" '
-        f'height="{pw + 20}" preserveAspectRatio="xMidYMid slice" href="data:image/jpeg;base64,{img}"/>'
-        f'<rect x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="url(#shade)"/></g>'
-    )
-    per = 2 * (pw + pw + 20)
-    s.add(f'<rect x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="none" stroke="{TEXT}" stroke-width="3"/>')
-    s.add(
-        f'<rect class="run" x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="none" stroke="{ACCENT}" '
-        f'stroke-width="2" stroke-dasharray="120 {per - 120}"/>'
-    )
-    # pegatina "available" que pisa el borde del retrato, como en el sitio
-    label = "AVAILABLE FOR PROJECTS"
-    bw = measure(label, "d9", 17, 0.2) + 26
-    bx, by = px - 16, py + pw - 30
-    s.add(f'<g class="badge" transform="rotate(-4 {bx + bw / 2:.0f} {by + 18})">')
-    s.add(f'<rect x="{bx + 5}" y="{by + 5}" width="{bw:.0f}" height="36" fill="{TEXT}"/>')
-    s.add(f'<rect x="{bx}" y="{by}" width="{bw:.0f}" height="36" fill="{ACCENT}"/>')
-    s.text(bx + 13, by + 25, label, "d9", 17, BG, ls=0.2)
+    # texto
+    s.add('<g class="fade" style="animation-delay:.1s">')
+    s.text(PAD, 150, "Software developer — Barcelona", "m4", 13, FAINT)
+    s.add("</g>")
+    rising_lines(s, PAD - 4, 246, ["Alejandro", "Font", "Muñiz"], "d9", 92, TEXT, 82, delay=0.2)
+    s.add('<g class="fade" style="animation-delay:.8s">')
+    y = 460
+    for line in wrap("Developer at Infini. I build management platforms, web applications and AI agents.", "b4", 16, 400):
+        s.text(PAD, y, line, "b4", 16, MUTED)
+        y += 25
     s.add("</g>")
     s.render("hero.svg")
 
 
-def marquee(items, name, fill, fg, sep, reverse=False, h=62, size=26, speed=34):
-    s = Svg(1000, h, "Stack: " + ", ".join(items))
-    s.add(f'<rect width="{s.w}" height="{h}" fill="{fill}"/>')
-    ls, gap = size * 0.04, 34
-    xs, x = [], 0
-    for it in items:
-        it = it.upper()
-        xs.append((x, it, False))
-        x += measure(it, "d8", size, ls) + gap
-        xs.append((x, "", True))
-        x += size * 0.5 + gap
-    total = x
-    d = "reverse" if reverse else "normal"
-    s.css.append(
-        f"@keyframes mq{{from{{transform:translateX(0)}}to{{transform:translateX(-{total:.1f}px)}}}}"
-        f".mq{{animation:mq {speed}s linear infinite {d}}}"
-    )
-    y = h / 2 + size * 0.36
-    s.add('<g class="mq">')
-    rep = int(s.w // total) + 2
-    for r in range(rep):
-        for xx, t, is_sep in xs:
-            if is_sep:
-                # separador: bloque macizo girado
-                q, cx0, cy0 = size * 0.32, xx + r * total + size * 0.25, h / 2
-                s.add(f'<rect x="{cx0 - q / 2:.1f}" y="{cy0 - q / 2:.1f}" width="{q:.1f}" height="{q:.1f}" '
-                      f'fill="{sep}" transform="rotate(45 {cx0:.1f} {cy0:.1f})"/>')
-            else:
-                s.text(xx + r * total, y, t, "d8", size, fg, ls=ls)
-    s.add("</g>")
-    s.defs.append(
-        f'<linearGradient id="fl"><stop offset="0" stop-color="{fill}"/><stop offset="1" stop-color="{fill}" stop-opacity="0"/></linearGradient>'
-        f'<linearGradient id="fr"><stop offset="0" stop-color="{fill}" stop-opacity="0"/><stop offset="1" stop-color="{fill}"/></linearGradient>'
-    )
-    s.add(f'<rect width="80" height="{h}" fill="url(#fl)"/><rect x="{s.w - 80}" width="80" height="{h}" fill="url(#fr)"/>')
-    s.render(name)
-
-
-# Proyectos publicados. El primero sale como tarjeta destacada a todo el ancho.
-# El ultimo campo dice si es una web en vivo (True) o un repo open source (False).
-PROJECTS = [
-    ("Rax Custom", "raxcustom.com",
-     "Website for a vehicle upholstery and restoration workshop in Tenerife: 3D seat configurator, "
-     "live Google reviews, project gallery and instant quote requests.",
-     ["Astro", "Bun", "Three.js", "Leaflet", "TypeScript"], "project-rax.svg", True),
-    ("Meeting Notes", "github.com/AleDev11/meeting-notes",
-     "Open-source desktop app that transcribes meetings, tells speakers apart and writes AI minutes.",
-     ["Electron", "React", "TypeScript", "Claude"], "project-meeting-notes.svg", False),
-    ("Winkit", "github.com/AleDev11/winkit",
-     "Open-source Windows tools with Claude: fix, translate and search from any app with a shortcut.",
-     ["Electron", "React", "TypeScript", "Claude"], "project-winkit.svg", False),
-]
-
-
-def odometer(s, x, y, value, size, step, cls, style, delay):
-    """Numero que rueda de 0 a `value`, cifra a cifra, como un cuentakilometros."""
-    s.use("d9", "0123456789+.")
-    s.css.append(
-        f"@keyframes odo{{from{{transform:translateY(0)}}}}"
-        f".odo{{animation:odo 1.8s {EASE_OUT} both}}"
-    )
-    s.defs.append(f'<clipPath id="oc{x:.0f}"><rect x="{x - 4:.0f}" y="{y - size * 0.8:.0f}" width="200" height="{size * 0.9:.0f}"/></clipPath>')
-    s.add(f'<g class="{cls}" style="{style}" fill="{TEXT}">')
-    s.add(f'<g clip-path="url(#oc{x:.0f})">')
-    for ch in value:
-        if ch.isdigit():
-            n = int(ch)
-            s.add(f'<g class="odo" style="animation-delay:{delay:.2f}s;transform:translateY({n * step}px)">')
-            for k in range(n + 1):
-                s.add(f'<text x="{x:.1f}" y="{y - k * step}" font-family="d9" font-size="{size}">{k}</text>')
-            s.add("</g>")
-        else:
-            s.add(f'<text x="{x:.1f}" y="{y}" font-family="d9" font-size="{size}">{ch}</text>')
-        x += measure(ch, "d9", size)
-    s.add(f'<text x="{x:.1f}" y="{y}" font-family="d9" font-size="{size}" fill="{ACCENT}">.</text>')
+def slab(words):
+    """La franja naranja: 'i build' y una palabra gigante que rota, cortada por el borde."""
+    h = 170
+    size = 150
+    step = size * 1.25
+    s = Svg(W, h, "I build " + ", ".join(words))
+    base(s, ACCENT)
+    n = len(words)
+    kf = []
+    for i in range(n):
+        a, b = i * 100 / n, (i + 1) * 100 / n
+        kf.append(f"{a:.2f}%,{b - 4:.2f}%{{transform:translateY({-i * step:.1f}px)}}")
+    kf.append(f"100%{{transform:translateY({-n * step:.1f}px)}}")
+    s.css.append("@keyframes rot{" + "".join(kf) + "}" + f".rot{{animation:rot 12s {EASE_IN_OUT} 1s infinite}}")
+    s.text(PAD, 34, "i build", "m5", 14, ON_ACCENT)
+    base_y = h + 14  # la linea base cae por debajo del borde: la palabra queda cortada
+    top = base_y - size * 1.0
+    s.defs.append(f'<clipPath id="slot"><rect x="0" y="{top:.0f}" width="{W}" height="{h - top:.0f}"/></clipPath>')
+    s.add('<g clip-path="url(#slot)"><g class="rot">')
+    for i, w in enumerate(words + words[:1]):
+        s.text(PAD - 6, base_y + i * step, w, "d9", size, ON_ACCENT, ls=tight(size, 0.07))
     s.add("</g></g>")
-
-
-def stats():
-    years = months_since(CAREER_START) // 12
-    data = [(f"+{years}", "YEARS BUILDING SOFTWARE"), (str(len(PROJECTS)), "PROJECTS SHIPPED"), ("3", "LANGUAGES · ES · EN · CA")]
-    s = Svg(1000, 132, f"+{years} years building software · {len(PROJECTS)} projects shipped · 3 languages")
-    s.add(f'<rect width="{s.w}" height="{s.h}" fill="{BORDER}"/>')
-    cw = (s.w - 2 - 2) / 3
-    s.css.append(
-        f"@keyframes st{{from{{opacity:0;transform:translateY(16px)}}to{{opacity:1;transform:none}}}}"
-        f".st{{animation:st .9s {EASE_OUT} both}}"
-        f"@keyframes sv{{0%,28%,100%{{fill:{TEXT}}}6%,22%{{fill:{ACCENT}}}}}"
-        f"@keyframes sb{{0%,28%,100%{{fill:{BG}}}6%,22%{{fill:#121212}}}}"
-        ".sv{animation:sv 9s ease-in-out infinite}.sb{animation:sb 9s ease-in-out infinite}"
-    )
-    for i, (v, l) in enumerate(data):
-        x = 1 + i * (cw + 1)
-        d = f"animation-delay:{i * 3 + 3}s"
-        s.add(f'<rect class="sb" style="{d}" x="{x:.1f}" y="1" width="{cw:.1f}" height="{s.h - 2}" fill="{BG}"/>')
-        s.add(f'<g class="st" style="animation-delay:{0.15 * i:.2f}s">')
-        odometer(s, x + 28, 76, v, 60, 64, "sv", d, 0.3 + 0.2 * i)
-        s.text(x + 30, 104, l, "l5", 11, FAINT, ls=2)
-        s.add("</g>")
-    s.render("stats.svg")
+    s.render("slab.svg")
 
 
 def about():
-    bio = [
-        "I work as a developer at Infini, a Barcelona-based consultancy specialising in intelligent "
-        "automation and AI. Day to day I build management platforms, develop web applications, create "
-        "AI agents and automate processes with RPA.",
-        "I've worked on international projects with clients in the Middle East — every project is from a "
-        "different sector, so no two weeks are alike. What motivates me most is seeing what I build "
-        "actually work and make someone's life easier.",
+    statement = [
+        ("I work at ", GHOST), ("Infini", TEXT), (", a Barcelona consultancy specialising in automation and AI. I build ", GHOST),
+        ("management platforms", TEXT), (", ", GHOST), ("web applications", TEXT), (" and ", GHOST), ("AI agents", ACCENT),
+        (", and every project is from a different sector.", GHOST),
     ]
-    facts = [
-        ("LOCATION", "Barcelona, Catalonia"),
-        ("COMPANY", "Infini · AI consultancy"),
-        ("FOCUS", "Web · AI agents · RPA"),
-        ("LANGUAGES", "Spanish · English · Catalan"),
-        ("STATUS", "Available for projects"),
-    ]
-    lines = []
-    for p in bio:
-        lines += wrap(p, "b4", 16, 540) + [""]
-    lines.pop()
-    h = max(110 + len(lines) * 28, 110 + len(facts) * 48) + 36
-    s = Svg(1000, h, "About me")
-    frame(s)
-    section_head(s, 48, 74, "About me")
-    s.css.append(
-        f"@keyframes ln{{from{{opacity:0;transform:translateX(-10px)}}to{{opacity:1;transform:none}}}}"
-        f".ln{{animation:ln .8s {EASE_OUT} both}}"
-        "@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}.dot{animation:blink 2.4s ease-in-out infinite}"
-    )
-    y = 130
-    for i, l in enumerate(lines):
-        if l:
-            s.add(f'<g class="ln" style="animation-delay:{0.3 + i * 0.06:.2f}s">')
-            # Infini en negrita blanca, como el <strong> del sitio
-            if "Infini" in l:
-                a, b = l.split("Infini", 1)
-                s.use("b4", a + b)
-                s.use("b5", "Infini")
-                s.add(
-                    f'<text x="48" y="{y}" font-family="b4" font-size="16" fill="{MUTED}">{esc(a)}'
-                    f'<tspan font-family="b5" fill="{TEXT}">Infini</tspan>{esc(b)}</text>'
-                )
+    size, maxw = 38, W - 2 * PAD
+    # partir en lineas respetando colores, palabra a palabra
+    words = []
+    for t, c in statement:
+        for k, word in enumerate(t.split(" ")):
+            if k > 0:
+                words.append((" ", c))
+            if word:
+                words.append((word, c))
+    lines, cur, curw = [], [], 0.0
+    ls = tight(size, 0.045)
+    for tok, c in words:
+        tw = measure(tok, "d7", size, ls)
+        if tok != " " and cur and curw + tw > maxw:
+            while cur and cur[-1][0] == " ":
+                cur.pop()
+            lines.append(cur)
+            cur, curw = [], 0.0
+        if tok == " " and not cur:
+            continue
+        cur.append((tok, c))
+        curw += tw
+    if cur:
+        lines.append(cur)
+    # juntar tramos consecutivos del mismo color
+    merged = []
+    for line in lines:
+        m = []
+        for t, c in line:
+            if m and m[-1][1] == c:
+                m[-1] = (m[-1][0] + t, c)
             else:
-                s.text(48, y, l, "b4", 16, MUTED)
-            s.add("</g>")
-        y += 28
-    fx, fy = 640, 104
-    s.add(f'<line x1="{fx - 30}" y1="{fy}" x2="{fx - 30}" y2="{fy + len(facts) * 48}" stroke="{BORDER_SOFT}"/>')
-    for i, (k, v) in enumerate(facts):
-        yy = fy + i * 48
-        s.add(f'<g class="ln" style="animation-delay:{0.5 + i * 0.1:.2f}s">')
-        s.text(fx, yy + 30, k, "l5", 10.5, FAINT, ls=2)
-        s.text(fx + 110, yy + 31, v, "b5", 14, TEXT)
-        s.add(f'<line x1="{fx}" y1="{yy + 48}" x2="{s.w - 48}" y2="{yy + 48}" stroke="{BORDER_SOFT}"/>')
+                m.append((t, c))
+        merged.append(m)
+
+    years = months_since(CAREER_START) // 12
+    stats = [(f"+{years}", "years developing"), ("3", "projects shipped"), ("3", "languages · es en ca")]
+    lh = 42
+    h = 70 + len(merged) * lh + 210
+    s = Svg(W, h, "About me — " + "".join(t for t, _ in statement))
+    base(s)
+    label_row(s, 1, "About me")
+    rising_lines(s, PAD, 96, merged, "d7", size, TEXT, lh, delay=0.15, cid="a")
+    y = 96 + len(merged) * lh + 40
+    colw = (W - 2 * PAD) / 3
+    for i, (v, l) in enumerate(stats):
+        x = PAD + i * colw
+        s.add(f'<g class="fade" style="animation-delay:{0.5 + i * 0.12:.2f}s">')
+        s.text(x, y + 16, l, "m4", 12, FAINT)
+        s.text(x - 4, y + 112, v, "d9", 104, TEXT, ls=tight(104, 0.06))
         s.add("</g>")
     s.render("about.svg")
 
 
-def stack():
-    groups = [
-        ("FRONTEND", ["React", "Next.js", "Astro", "TypeScript", "Tailwind CSS", "Vue.js"]),
-        ("BACKEND", ["Bun", "Hono", "Node.js", "Java", "Spring Boot", "Python", "Odoo"]),
-        ("DATA", ["PostgreSQL", "MongoDB", "Redis", "MySQL", "MinIO"]),
-        ("CLOUD & TOOLING", ["AWS", "Cloudflare", "Docker", "Vercel", "Linux", "GraphQL"]),
-        ("AI & AUTOMATION", ["AI Agents", "RPA", "Process automation", "REST APIs"]),
-    ]
-    row = 52
-    h = 118 + len(groups) * row + 20
-    s = Svg(1000, h, "Stack — " + "; ".join(f"{g}: {', '.join(i)}" for g, i in groups))
-    frame(s)
-    section_head(s, 48, 74, "Stack")
-    total = sum(len(i) for _, i in groups)
-    cycle = round(total * 0.28 + 3, 1)
-    chip_css(s, cycle)
+def project_lead(name, url_label, desc, fname, img):
+    h = 440
+    s = Svg(W, h, f"{name} — {desc}")
+    base(s)
     s.css.append(
-        f"@keyframes lb{{from{{opacity:0}}to{{opacity:1}}}}.lb{{animation:lb .8s {EASE_OUT} both}}"
+        f"@keyframes ph{{from{{transform:scale(1.06)}}to{{transform:none}}}}"
+        f".ph{{transform-box:fill-box;transform-origin:center;animation:ph 1.8s {EASE_OUT} both}}"
     )
-    n = 0
-    for gi, (label, items) in enumerate(groups):
-        y = 112 + gi * row
-        s.add(f'<g class="lb" style="animation-delay:{0.2 + gi * 0.12:.2f}s">')
-        s.text(48, y + 20, label, "l6", 11.5, FAINT, ls=2.2)
-        s.add("</g>")
-        x = 230
-        for it in items:
-            w = chip(s, x, y, it, delay=0.3 + gi * 0.12 + n * 0.02, wave=1.5 + n * 0.28)
-            x += w + 10
-            n += 1
-        if gi < len(groups) - 1:
-            s.add(f'<line x1="48" y1="{y + row - 11}" x2="{s.w - 48}" y2="{y + row - 11}" stroke="{BORDER_SOFT}" stroke-dasharray="2 4"/>')
-    s.render("stack.svg")
+    s.defs.append(f'<clipPath id="lc"><rect width="{W}" height="{h}"/></clipPath>')
+    s.defs.append(
+        '<linearGradient id="sh" x1="0" y1="0" x2="0" y2="1">'
+        f'<stop offset=".15" stop-color="{BG}" stop-opacity="0"/><stop offset=".95" stop-color="{BG}" stop-opacity=".96"/></linearGradient>'
+    )
+    s.add(f'<g clip-path="url(#lc)"><image class="ph" x="0" y="0" width="{W}" height="{W * 0.625:.0f}" '
+          f'preserveAspectRatio="xMidYMin slice" href="{jpeg(img)}"/></g>')
+    s.add(f'<rect width="{W}" height="{h}" fill="{BG}" opacity=".68"/>')
+    s.add(f'<rect width="{W}" height="{h}" fill="url(#sh)"/>')
+    s.add('<g class="fade" style="animation-delay:.3s">')
+    s.text(PAD, h - 150, f"01 — Live — {url_label}", "m4", 13, ACCENT)
+    s.add("</g>")
+    rising_lines(s, PAD - 6, h - 46, [name], "d9", 116, TEXT, 0, delay=0.35, cid="p")
+    s.add('<g class="fade" style="animation-delay:.7s">')
+    y = h - 92
+    for line in wrap(desc, "b5", 15, 300):
+        s.text(W - PAD, y, line, "b5", 15, TEXT, anchor="end")
+        y += 22
+    s.text(W - PAD, y + 4, "View live →", "b5", 15, ACCENT, anchor="end")
+    s.add("</g>")
+    s.render(fname)
+
+
+def project_half(idx, name, url_label, desc, tags, fname, visual):
+    w, h = 488, 520
+    s = Svg(w, h, f"{name} — {desc}")
+    base(s)
+    vh = 290
+    if visual[0] == "img":
+        s.css.append(
+            f"@keyframes ph{{from{{transform:scale(1.06)}}to{{transform:none}}}}"
+            f".ph{{transform-box:fill-box;transform-origin:center;animation:ph 1.8s {EASE_OUT} both}}"
+        )
+        s.defs.append(f'<clipPath id="vc"><rect width="{w}" height="{vh}"/></clipPath>')
+        s.add(f'<g clip-path="url(#vc)"><image class="ph" x="0" y="0" width="{w}" height="{w * 0.625 + 20:.0f}" '
+              f'preserveAspectRatio="xMinYMin slice" href="{jpeg(visual[1])}"/></g>')
+    else:
+        # Winkit: sus atajos reales, en plano
+        s.add(f'<rect width="{w}" height="{vh}" fill="#151515"/>')
+        s.css.append(
+            "@keyframes key{0%,30%,100%{fill:#222}10%,20%{fill:" + ACCENT + "}}"
+            ".key{animation:key 3.2s ease-out infinite}"
+        )
+        rows = visual[1]
+        y = 52
+        for ri, (keys, does) in enumerate(rows):
+            x = 34
+            for ki, k in enumerate(keys):
+                kw = max(40, measure(k, "m4", 13) + 22)
+                s.add(f'<rect class="key" style="animation-delay:{ri * 0.8:.1f}s" x="{x}" y="{y}" width="{kw:.0f}" height="40" fill="#222"/>')
+                s.text(x + kw / 2, y + 25, k, "m4", 13, TEXT, anchor="middle")
+                x += kw + (18 if ki < len(keys) - 1 else 0)
+                if ki < len(keys) - 1:
+                    s.text(x - 12, y + 25, "+", "m4", 13, GHOST, anchor="middle")
+            s.text(w - 34, y + 30, does, "d8", 28, GHOST, ls=tight(28, 0.04), anchor="end")
+            y += 56
+    s.add('<g class="fade" style="animation-delay:.3s">')
+    s.text(0, vh + 42, f"{idx} — Open source — {url_label}", "m4", 12, FAINT)
+    s.add("</g>")
+    rising_lines(s, -3, vh + 104, [name], "d9", 56, TEXT, 0, delay=0.35, cid="t")
+    s.add('<g class="fade" style="animation-delay:.6s">')
+    y = vh + 140
+    for line in wrap(desc, "b4", 15, w - 20):
+        s.text(0, y, line, "b4", 15, MUTED)
+        y += 22
+    s.text(0, y + 12, " / ".join(tags), "m4", 12, FAINT)
+    s.text(0, y + 44, "View code →", "b5", 15, ACCENT)
+    s.add("</g>")
+    s.render(fname)
 
 
 def experience():
     jobs = [
-        (f"JUL 2023 — PRESENT · {duration(INFINI_START)}", "INFINI", "SOFTWARE DEVELOPER · BARCELONA · AI CONSULTANCY",
-         "I build management platforms, develop web applications, create AI agents and automate processes "
-         "with RPA for clients across different sectors. International projects with teams in the Middle East.",
+        ("Jul 2023 — Present", duration(INFINI_START), "Infini", "Software Developer — Barcelona · AI consultancy",
+         ["Build management platforms and custom web applications for clients across different sectors.",
+          "Create AI agents.", "Automate business processes with RPA.",
+          "Work on international projects with clients and teams in the Middle East."],
          ["React", "Java", "Python", "AI", "RPA", "AWS"], True),
-        ("OCT 2022 — MAR 2023", "TETRAVOL SL", "SOFTWARE DEVELOPER · INTERNSHIP",
-         "Software development internship, contributing to projects using React, Unity and MySQL.",
+        ("Oct 2022 — Mar 2023", "", "Tetravol SL", "Software Developer — Internship",
+         ["Software development internship on projects using React, Unity and MySQL."],
          ["React", "Unity", "MySQL"], False),
     ]
-    blocks, y = [], 118
+    cx, wx = PAD + 170, 560
+    blocks, y = [], 70
     for j in jobs:
-        lines = wrap(j[3], "b4", 15, 780)
-        bh = 100 + len(lines) * 24 + 84
+        lines = [wrap(p, "b4", 15, W - PAD - wx - 22) for p in j[4]]
+        bh = max(150, 20 + sum(len(l) * 22 + 10 for l in lines) + 40)
         blocks.append((y, lines, j))
-        y += bh
+        y += bh + 30
     h = y + 10
-    s = Svg(1000, h, "Experience — Infini (Jul 2023–present), Tetravol SL (Oct 2022–Mar 2023)")
-    frame(s)
-    section_head(s, 48, 74, "Experience")
-    chip_css(s, 8)
-    tx = 64
-    s.css.append(
-        f"@keyframes tl{{from{{transform:scaleY(0)}}to{{transform:scaleY(1)}}}}"
-        f".tl{{transform-box:fill-box;transform-origin:top;animation:tl 1.6s {EASE_OUT} .3s both}}"
-        "@keyframes ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.4);opacity:0}}"
-        ".ring{transform-box:fill-box;transform-origin:center;animation:ring 2.2s ease-out infinite}"
-        f"@keyframes jb{{from{{opacity:0;transform:translateX(-14px)}}to{{opacity:1;transform:none}}}}"
-        f".jb{{animation:jb .9s {EASE_OUT} both}}"
-    )
-    s.add(f'<line x1="{tx}" y1="118" x2="{tx}" y2="{h - 40}" stroke="{BORDER}"/>')
-    s.add(f'<rect class="tl" x="{tx - 1}" y="118" width="2" height="{blocks[-1][0] - 118 + 20}" fill="{ACCENT}"/>')
-    for bi, (by, lines, (period, company, role, _, tags, current)) in enumerate(blocks):
-        s.add(f'<g class="jb" style="animation-delay:{0.5 + bi * 0.35:.2f}s">')
+    s = Svg(W, h, "Experience — Infini (Jul 2023–present), Tetravol SL (Oct 2022–Mar 2023)")
+    base(s)
+    label_row(s, 1, "Experience", "(02)")
+    for bi, (by, lines, (period, dur, company, role, _, tags, current)) in enumerate(blocks):
+        if bi > 0:
+            s.add(f'<rect x="{PAD}" y="{by - 16}" width="{W - 2 * PAD}" height="1" fill="{LINE}"/>')
         if current:
-            s.add(f'<circle class="ring" cx="{tx}" cy="{by + 12}" r="6" fill="{ACCENT}"/>')
-        s.add(f'<rect x="{tx - 7}" y="{by + 5}" width="14" height="14" fill="{ACCENT if current else BG}" stroke="{ACCENT}" stroke-width="2" transform="rotate(45 {tx} {by + 12})"/>')
-        cx = 104
-        s.text(cx, by + 17, period, "l6", 12, ACCENT, ls=2.2)
-        s.text(cx, by + 60, company, "d9", 42, TEXT, ls=0.4)
-        s.text(cx, by + 84, role, "l5", 11, FAINT, ls=1.8)
-        yy = by + 114
-        for l in lines:
-            s.text(cx, yy, l, "b4", 15, MUTED)
-            yy += 24
-        x = cx
-        for ti, t in enumerate(tags):
-            x += chip(s, x, yy - 8, t, delay=0.9 + bi * 0.35 + ti * 0.08, wave=1.5 + (bi * 6 + ti) * 0.3) + 8
+            s.add(f'<rect class="draw" style="animation-delay:.4s" x="{PAD}" y="{by - 17 if bi else 0}" width="{W - 2 * PAD}" height="2" fill="{ACCENT}"/>')
+        s.add(f'<g class="fade" style="animation-delay:{0.3 + bi * 0.25:.2f}s">')
+        s.text(PAD, by + 30, period, "m4", 12, FAINT)
+        if dur:
+            s.text(PAD, by + 50, dur, "m4", 12, ACCENT)
+        s.text(cx - 3, by + 66, company, "d9", 54, TEXT, ls=tight(54, 0.055))
+        for k, part in enumerate(wrap(role, "b4", 14, wx - cx - 30)):
+            s.text(cx, by + 96 + k * 20, part, "b4", 14, MUTED)
+        yy = by + 34
+        for para in lines:
+            s.text(wx, yy, "—", "b5", 15, ACCENT)
+            for line in para:
+                s.text(wx + 22, yy, line, "b4", 15, MUTED)
+                yy += 22
+            yy += 10
+        s.text(wx, yy + 12, " / ".join(tags), "m4", 12, FAINT)
         s.add("</g>")
     s.render("experience.svg")
 
 
-def project(tag, name, url_label, desc, tags, fname, live=True, w=488, kicker=""):
-    status, cta = ("LIVE", "VIEW LIVE") if live else ("OPEN SOURCE", "VIEW CODE")
-    s = Svg(w, 300, f"{name} — {desc}")
-    frame(s, fill=BG_ALT)
-    s.css.append(
-        "@keyframes sw{0%{transform:translateX(-160px)}60%,100%{transform:translateX(" + str(w) + "px)}}"
-        ".sw{animation:sw 4.5s cubic-bezier(0.65,0,0.35,1) infinite}"
-        "@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}.dot{animation:blink 2.4s ease-in-out infinite}"
-        "@keyframes arr{0%,100%{transform:translate(0,0)}50%{transform:translate(3px,-3px)}}"
-        ".arr{animation:arr 1.8s ease-in-out infinite}"
-        f"@keyframes pin{{from{{opacity:0;transform:translateY(14px)}}to{{opacity:1;transform:none}}}}"
-        f".pin{{animation:pin .9s {EASE_OUT} both}}"
-    )
-    chip_css(s, 6)
-    s.defs.append(
-        f'<linearGradient id="sg"><stop offset="0" stop-color="{ACCENT}" stop-opacity="0"/>'
-        f'<stop offset=".5" stop-color="{ACCENT}"/><stop offset="1" stop-color="{ACCENT}" stop-opacity="0"/></linearGradient>'
-    )
-    s.add(f'<rect x="1" y="1" width="{w - 2}" height="2" fill="{BORDER}"/>')
-    s.add(f'<rect class="sw" x="0" y="1" width="160" height="2" fill="url(#sg)"/>')
-    s.text(w - 18, 290, tag, "d9", 170, "#161616", anchor="end")
-    s.add('<g class="pin">')
-    s.text(28, 50, tag, "d9", 22, ACCENT)
-    kx = 28 + measure(tag, "d9", 22) + 14
-    if kicker:
-        s.text(kx, 48, kicker, "l6", 11, FAINT, ls=2)
-    # estado en una etiqueta en caja: maciza si esta en produccion
-    tw = measure(status, "l6", 10.5, 1.6) + 18
-    tx0 = w - 28 - tw
-    if live:
-        s.add(f'<rect x="{tx0:.1f}" y="32" width="{tw:.1f}" height="24" fill="{ACCENT}"/>')
-        s.text(tx0 + 9, 48, status, "l6", 10.5, BG, ls=1.6)
-    else:
-        s.add(f'<rect x="{tx0:.1f}" y="32" width="{tw:.1f}" height="24" fill="none" stroke="{DIM}" stroke-width="1.5"/>')
-        s.text(tx0 + 9, 48, status, "l6", 10.5, DIM, ls=1.6)
-    s.text(28, 112, name.upper(), "d9", 48, TEXT, ls=0.4)
-    y = 146
-    for l in wrap(desc, "b4", 14.5, min(w - 68, 620)):
-        s.text(28, y, l, "b4", 14.5, MUTED)
-        y += 23
-    s.add("</g>")
-    x = 28
-    for i, t in enumerate(tags):
-        x += chip(s, x, 206, t, delay=0.4 + i * 0.08, wave=1.2 + i * 0.3) + 8
-    s.add(f'<line x1="28" y1="256" x2="{w - 28}" y2="256" stroke="{BORDER}"/>')
-    s.text(28, 281, cta, "l6", 12, ACCENT, ls=2)
-    ax = 28 + measure(cta, "l6", 12, 2) + 6
-    s.add(
-        f'<g class="arr"><path d="M{ax:.1f} 281 l8 -8 M{ax + 2:.1f} 273 h6 v6" stroke="{ACCENT}" stroke-width="1.8" fill="none"/></g>'
-    )
-    s.text(w - 28, 281, url_label.upper(), "l5", 11, GHOST, ls=1.6, anchor="end")
-    s.render(fname)
+def stack():
+    groups = [
+        ("Frontend", ["React", "Next.js", "Astro", "TypeScript", "Tailwind CSS", "Vue.js"]),
+        ("Backend", ["Bun", "Hono", "Node.js", "Java", "Spring Boot", "Python", "Odoo"]),
+        ("Data", ["PostgreSQL", "MongoDB", "Redis", "MySQL", "MinIO"]),
+        ("Cloud & tooling", ["AWS", "Cloudflare", "Docker", "Vercel", "Linux", "GraphQL"]),
+        ("AI & automation", ["AI agents", "RPA", "Process automation", "REST APIs"]),
+    ]
+    row = 34
+    h = 70 + 70 + max(len(i) for _, i in groups) * row + 30
+    s = Svg(W, h, "Stack — " + "; ".join(f"{g}: {', '.join(i)}" for g, i in groups))
+    base(s)
+    label_row(s, 1, "Stack", f"({sum(len(i) for _, i in groups)})")
+    colw = (W - 2 * PAD + 20) / len(groups)
+    for gi, (label, items) in enumerate(groups):
+        x = PAD + gi * colw
+        s.add(f'<g class="fade" style="animation-delay:{0.2 + gi * 0.1:.2f}s">')
+        s.text(x - 1, 112, label, "d8", 24, ACCENT if gi == len(groups) - 1 else TEXT, ls=tight(24, 0.04))
+        for k, it in enumerate(items):
+            yy = 140 + k * row
+            s.add(f'<rect x="{x:.1f}" y="{yy}" width="{colw - 20:.1f}" height="1" fill="{LINE}"/>')
+            s.text(x, yy + 23, it, "b4", 14, MUTED)
+        s.add("</g>")
+    s.render("stack.svg")
 
 
 def education():
-    """Formacion y certificaciones, como la seccion Formacion de afont.dev."""
     studies = [
-        ("SEP 2021 — MAY 2023", "Cross-platform App Development", "CAMPUSNET · HIGHER VOCATIONAL DEGREE (DAM)"),
-        ("SEP 2019 — JUN 2021", "Science & Technology Baccalaureate", "COL·LEGI PARE MANYANET LES CORTS"),
+        ("2021–2023", "Cross-platform App Development", "CampusNet · Higher Vocational Degree (DAM)"),
+        ("2019–2021", "Science & Technology Baccalaureate", "Col·legi Pare Manyanet Les Corts"),
     ]
     certs = [
         ("SQL Server", True),
@@ -632,141 +508,108 @@ def education():
         ("Google AI Essentials", False),
         ("Professional Scrum Master I", False),
     ]
-    row = 44
-    h = max(118 + len(studies) * 112, 118 + 40 + len(certs) * row) + 40
-    s = Svg(1000, h, "Education — Cross-platform App Development (DAM), CampusNet, 2021–2023. Certifications: "
+    row = 40
+    h = 70 + len(studies) * 100 + 50 + len(certs) * row + 30
+    s = Svg(W, h, "Education — Cross-platform App Development (DAM), CampusNet, 2021–2023. Certifications: "
             + ", ".join(f"{n} ({'obtained' if d else 'in progress'})" for n, d in certs))
-    frame(s)
-    section_head(s, 48, 74, "Education")
-    s.css.append(
-        f"@keyframes ed{{from{{opacity:0;transform:translateY(12px)}}to{{opacity:1;transform:none}}}}"
-        f".ed{{animation:ed .8s {EASE_OUT} both}}"
-        "@keyframes st{to{transform:translateX(17px)}}.st{animation:st .9s linear infinite}"
-    )
-    # estudios: periodo, titulo y centro, con la barra naranja de los pilares del sitio
-    for i, (period, title, school) in enumerate(studies):
-        y = 118 + i * 112
-        s.add(f'<g class="ed" style="animation-delay:{0.3 + i * 0.15:.2f}s">')
-        s.add(f'<rect x="48" y="{y}" width="3" height="78" fill="{ACCENT if i == 0 else BORDER}"/>')
-        s.text(68, y + 16, period, "l6", 11.5, ACCENT, ls=2.2)
-        s.text(68, y + 48, title.upper(), "d9", 26, TEXT, ls=0.4)
-        s.text(68, y + 72, school, "l5", 10.5, FAINT, ls=1.6)
+    base(s)
+    label_row(s, 1, "Education")
+    cx = PAD + 170
+    y = 70
+    for i, (years, title, school) in enumerate(studies):
+        s.add(f'<g class="fade" style="animation-delay:{0.2 + i * 0.15:.2f}s">')
+        s.text(PAD, y + 34, years, "m4", 12, FAINT)
+        s.text(cx - 2, y + 44, title, "d9", 36, TEXT, ls=tight(36, 0.05))
+        s.text(cx, y + 72, school, "b4", 14, MUTED)
         s.add("</g>")
-    # certificaciones
-    cx, cy = 560, 118
-    s.add(f'<line x1="{cx - 32}" y1="{cy}" x2="{cx - 32}" y2="{h - 40}" stroke="{BORDER_SOFT}"/>')
-    s.add('<g class="ed" style="animation-delay:.4s">')
-    s.text(cx, cy + 16, "CERTIFICATIONS", "l6", 11.5, FAINT, ls=2.2)
-    s.add("</g>")
+        s.add(f'<rect x="{PAD}" y="{y + 94}" width="{W - 2 * PAD}" height="1" fill="{LINE}"/>')
+        y += 100
+    y += 40
+    s.add('<g class="fade" style="animation-delay:.5s">')
+    s.text(PAD - 1, y + 28, "Certifications", "d8", 22, TEXT, ls=tight(22, 0.04))
     for i, (name, done) in enumerate(certs):
-        y = cy + 40 + i * row
-        s.add(f'<g class="ed" style="animation-delay:{0.5 + i * 0.08:.2f}s">')
-        s.text(cx, y + 23, name, "b5", 14, TEXT if done else MUTED)
-        state = "OBTAINED" if done else "IN PROGRESS"
-        tw = measure(state, "l6", 10, 1.6) + 18
-        tx0 = s.w - 48 - tw
-        if done:
-            s.add(f'<rect x="{tx0:.1f}" y="{y + 8}" width="{tw:.1f}" height="22" fill="{ACCENT}"/>')
-            s.text(tx0 + 9, y + 23, state, "l6", 10, BG, ls=1.6)
-        else:
-            # "en curso": rayas que avanzan dentro de la caja, como en el sitio
-            cid = f"cp{i}"
-            s.defs.append(f'<clipPath id="{cid}"><rect x="{tx0:.1f}" y="{y + 8}" width="{tw:.1f}" height="22"/></clipPath>')
-            s.add(f'<g clip-path="url(#{cid})"><g class="st">')
-            k = tx0 - 34
-            while k < tx0 + tw + 20:
-                s.add(f'<path d="M{k:.1f} {y + 30} l22 -22 h6 l-22 22z" fill="{ACCENT}" opacity=".35"/>')
-                k += 17
-            s.add("</g></g>")
-            s.add(f'<rect x="{tx0:.1f}" y="{y + 8}" width="{tw:.1f}" height="22" fill="none" stroke="{ACCENT}" stroke-width="1.5"/>')
-            s.text(tx0 + 9, y + 23, state, "l6", 10, TEXT, ls=1.6)
-        if i < len(certs) - 1:
-            s.add(f'<line x1="{cx}" y1="{y + row - 4}" x2="{s.w - 48}" y2="{y + row - 4}" stroke="{BORDER_SOFT}" stroke-dasharray="2 4"/>')
-        s.add("</g>")
+        yy = y + i * row
+        s.add(f'<rect x="{cx}" y="{yy}" width="{W - PAD - cx}" height="1" fill="{LINE}"/>')
+        s.text(cx, yy + 26, name, "b4", 15, TEXT if done else MUTED)
+        s.text(W - PAD, yy + 26, "Obtained" if done else "In progress", "m4", 12, ACCENT if done else FAINT, anchor="end")
+    s.add(f'<rect x="{cx}" y="{y + len(certs) * row}" width="{W - PAD - cx}" height="1" fill="{LINE}"/>')
+    s.add("</g>")
     s.render("education.svg")
 
 
 def contact():
-    s = Svg(1000, 300, "Got a project in mind? Let's talk — fontalejandro0@gmail.com")
-    s.add(f'<rect width="{s.w}" height="{s.h}" fill="{ACCENT}"/>')
-    s.defs.append(
-        f'<pattern id="dg" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)">'
-        f'<rect width="4" height="14" fill="{ACCENT_DARK}" opacity=".35"/></pattern>'
-    )
-    s.css.append(
-        "@keyframes dg{to{transform:translateX(-56px)}}.dgm{animation:dg 3s linear infinite}"
-        f"@keyframes cu{{from{{transform:translateY(90px)}}to{{transform:none}}}}"
-        f".cu{{animation:cu 1s {EASE_OUT} both}}"
-        f"@keyframes cf{{from{{opacity:0}}to{{opacity:1}}}}.cf{{animation:cf 1s {EASE_OUT} both}}"
-        "@keyframes big{0%,100%{transform:rotate(45deg)}50%{transform:rotate(55deg)}}"
-        ".big{animation:big 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}"
-    )
-    s.defs.append('<clipPath id="rc"><rect x="640" y="0" width="360" height="300"/></clipPath>')
-    s.add('<g clip-path="url(#rc)"><g class="dgm"><rect x="640" y="0" width="420" height="300" fill="url(#dg)"/></g></g>')
-    s.add(f'<g clip-path="url(#rc)"><rect class="big" x="760" y="80" width="140" height="140" fill="{BG}"/></g>')
-    s.add('<g class="cf" style="animation-delay:.1s">')
-    kw = measure("LET'S TALK", "l6", 12, 2.2) + 22
-    s.add(f'<rect x="56" y="48" width="{kw:.1f}" height="28" fill="none" stroke="{BG}" stroke-width="2"/>')
-    s.text(67, 67, "LET'S TALK", "l6", 12, BG, ls=2.2)
+    h = 360
+    s = Svg(W, h, "Got a project in mind? Let's talk — fontalejandro0@gmail.com")
+    base(s, ACCENT)
+    s.text(PAD, 50, "Got a project in mind?", "m5", 14, ON_ACCENT)
+    s.add('<g class="fade" style="animation-delay:.2s">')
+    y = 40
+    for line in wrap("Open to new opportunities, job offers and collaborations. I reply within 24 hours.", "b4", 15, 320):
+        s.text(W - PAD, y + 10, line, "b4", 15, ON_ACCENT, anchor="end")
+        y += 22
     s.add("</g>")
-    s.defs.append('<clipPath id="c1"><rect x="0" y="82" width="700" height="84"/></clipPath>')
-    s.defs.append('<clipPath id="c2"><rect x="0" y="160" width="700" height="80"/></clipPath>')
-    s.add('<g clip-path="url(#c1)">')
-    s.text(52, 152, "GOT A PROJECT", "d9", 84, BG, ls=-1, cls="cu", extra=' style="animation-delay:.2s"')
-    s.add('</g><g clip-path="url(#c2)">')
-    s.text(52, 228, "IN MIND?", "d9", 84, BG, ls=-1, cls="cu", extra=' style="animation-delay:.35s"')
-    s.add("</g>")
-    s.add('<g class="cf" style="animation-delay:.8s">')
-    s.text(56, 266, "Tell me what you need — I'll get back to you within 24 hours.", "b5", 15, BG)
-    s.add("</g>")
+    rising_lines(s, PAD - 5, 186, ["fontalejandro0", "@gmail.com →"], "d9", 104, ON_ACCENT, 92, delay=0.25, cid="c")
+    s.add(f'<rect class="draw" style="animation-delay:.6s" x="{PAD}" y="{h - 44}" width="{W - 2 * PAD}" height="2" fill="{ON_ACCENT}"/>')
     s.render("contact.svg")
 
 
 def button(label, fname, solid):
-    lab = label.upper()
-    w = measure(lab, "l6", 13, 1.3) + 60
+    w = measure(label, "b5", 15) + 70
     s = Svg(int(w) + 2, 52, label)
-    s.css.append(
-        "@keyframes sh{0%,70%{transform:translateX(-80px)}100%{transform:translateX(" + str(int(w) + 80) + "px)}}"
-        ".sh{animation:sh 3.5s ease-in-out infinite}"
-    )
-    s.defs.append('<clipPath id="bc"><rect x="1" y="1" width="' + f"{w:.1f}" + '" height="50" rx="6"/></clipPath>')
-    s.defs.append(
-        '<linearGradient id="shg"><stop offset="0" stop-color="#fff" stop-opacity="0"/>'
-        '<stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
-    )
-    if solid:
-        s.add(f'<rect x="1" y="1" width="{w:.1f}" height="50" rx="6" fill="{ACCENT}"/>')
-    else:
-        s.add(f'<rect x="2" y="2" width="{w - 2:.1f}" height="48" rx="6" fill="{BG}" stroke="{ACCENT}" stroke-width="2"/>')
-    s.add(f'<g clip-path="url(#bc)"><rect class="sh" x="0" y="0" width="60" height="52" fill="url(#shg)" transform="skewX(-20)"/></g>')
-    s.text(1 + w / 2, 31, lab, "l6", 13, BG if solid else ACCENT, ls=1.3, anchor="middle")
+    fill, fg = (ACCENT, ON_ACCENT) if solid else (BG, TEXT)
+    s.add(f'<rect width="{s.w}" height="52" fill="{fill}"/>')
+    s.text(22, 31, label, "b5", 15, fg)
+    s.text(s.w - 18, 31, "→" if solid else "↗", "b5", 15, ON_ACCENT if solid else ACCENT, anchor="end")
     s.render(fname)
+
+
+def footer():
+    h = 190
+    s = Svg(W, h, "Alejandro Font · Barcelona · Since 2022")
+    base(s)
+    s.add(f'<rect x="{PAD}" y="0" width="{W - 2 * PAD}" height="1" fill="{LINE}"/>')
+    s.text(PAD, 30, "© Alejandro Font Muñiz", "m4", 12, FAINT)
+    s.text(W - PAD, 30, "Barcelona · Available for projects", "m4", 12, FAINT, anchor="end")
+    size = 172
+    while measure("Alejandro Font", "d9", size, tight(size, 0.06)) > W - 2 * PAD + 10:
+        size -= 2
+    rising_lines(s, PAD - 6, h + size * 0.16, ["Alejandro Font"], "d9", size, ACCENT, 0, delay=0.2, cid="f")
+    s.render("footer.svg")
+
+
+# Proyectos publicados. El primero sale a sangre, a todo el ancho; los otros dos, en mitades.
+PROJECTS = [
+    ("Rax Custom", "raxcustom.com",
+     "Website, 3D seat configurator and quote requests for an upholstery workshop in Tenerife.",
+     "project-rax.svg", "rax-custom.jpg"),
+    ("Meeting Notes", "github.com/AleDev11/meeting-notes",
+     "Open-source desktop app that transcribes meetings, tells speakers apart and writes AI minutes.",
+     ["Electron", "React", "TypeScript", "Claude"], "project-meeting-notes.svg", ("img", "meeting-notes.jpg")),
+    ("Winkit", "github.com/AleDev11/winkit",
+     "Open-source Windows tools with Claude: fix, translate and search from any app with a shortcut.",
+     ["Electron", "React", "TypeScript", "Claude"], "project-winkit.svg",
+     ("keys", [(["Alt", "Space"], "Launcher"), (["Ctrl", "Alt", "C"], "Fix"),
+               (["Ctrl", "Alt", "T"], "Translate"), (["Ctrl", "Alt", "L"], "Read")])),
+]
 
 
 def main():
     OUT.mkdir(exist_ok=True)
     hero()
-    marquee(
-        ["Astro", "React", "TypeScript", "Next.js", "Bun", "Hono", "Java", "Spring Boot", "Python",
-         "AI Agents", "RPA", "Cloudflare", "AWS", "Docker", "PostgreSQL"],
-        "marquee.svg", ACCENT, BG, ACCENT_DEEP,
-    )
-    stats()
+    slab(["AI agents", "web apps", "platforms", "RPA"])
     about()
-    stack()
+    lead = PROJECTS[0]
+    project_lead(*lead)
+    for i, p in enumerate(PROJECTS[1:]):
+        project_half(f"{i + 2:02d}", *p)
     experience()
-    for i, (name, url, desc, tags, fname, live) in enumerate(PROJECTS):
-        featured = i == 0
-        project(f"{i + 1:02d}", name, url, desc, tags, fname, live,
-                w=1000 if featured else 488, kicker="CURRENT CLIENT WORK" if featured else "")
+    stack()
     education()
     contact()
     button("Email me", "btn-email.svg", True)
     button("afont.dev", "btn-web.svg", False)
     button("LinkedIn", "btn-linkedin.svg", False)
-    marquee(["Alejandro Font", "Barcelona", "Since 2022", "Web · AI · Automation"],
-            "footer.svg", BG, "#3a3a3a", ACCENT, reverse=True, h=48, size=18, speed=40)
+    footer()
 
 
 if __name__ == "__main__":
