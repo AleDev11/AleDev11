@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="136" height="52" viewBox="0 0 136 52" role="img" aria-label="Email me">
+<svg xmlns="http://www.w3.org/2000/svg" width="129" height="52" viewBox="0 0 129 52" role="img" aria-label="Email me">
 <title>Email me</title>
 <defs>
 <style>
-@font-face{font-family:'b5';src:url(data:font/woff2;base64,d09GMgABAAAAAAQ4ABAAAAAAB/gAAAPcAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhwbgU4cKgZgP1NUQVREAFwRCAqEDIM/ATYCJAMoCxYABCAFg1wHIAwHG38GSJ6DcbN8RFFFo9JmrsnKvDkfUbUfb8++CyGUJ1SoECXZ6K8TRSpCA1kgI0mYyOT+J8/6QZkOnYojMlNjpdvo3RfSiVb/A8AOzH/8wvm/pt61HvjdJzg7xCqKVVsmRhkPrDx1z/c8iqYTKjAYqM68kZZEilF5Z7+fN5nnr1wwEVBKNDHaGBGMt1UBfF9FXRtEX57iskD0dZfWDNF3KI8NouHQ/wtyW+uyARNBNGWsGKscg+MMB5rR9G++lZr9nf4OTBvdT//li68w8DmozE//+z8ZIiqXBjFalEE7NTtGMxDFoGA4aEVHaYHo1SRQyz8EGbkLAK1U+WIUNYJ2ATi6T5JzkJJCzI2/9vTx0jo4AEtZh7f/b9J2IXQgUDPrGJZiixirMBOKldAHeoMHAW7epSyICKKZCoEszBcMoiIGCCgMmAkTzIQ7BEw2VhltqXIULSNrB4IsT+5/7LHMYgvML7HodKYcwHgwExiHJ/gGTMREQJTqRASZKJoYOQbnyBpB84OJ5j5OjVxD5lzv7JxziT1yJrbj+nVi9Cp4+Jgg4NEL9sip7UjY0wtXOkavX0eQtp174OEHyiQW8XbiKpi48Ln0fEL7lSs9fhLf2q8QNAInRi4ha3r2OoIAlGoPX3L4iaedvZddhRqPzen+M1sHdOUSziMEnP54Tj18vmOo46JJDfeJ1uHa8vKWuo7A3byChdmpCzdY6P6Nvt5Bi8NlOB9yLiDkZFEzhzfKJV/pKm+Kj2tNKhUIi2W8BXE/dPG8J7BqQoOjNG9GW1vedHtZXZW1pP647piZWH1NfVHi7Z1WeujhqT1PK/zxiorSzOyqCqidaQqF/Tu/5rabaoO5wbJOqJ1JofN2jJ4t5orL2uvYJUETm0u58qwGlaS7uMOUV55cnsoN2qLM0maVKWoyeEjMLkUWSC+YbCaA1WgYbdwSTDgMvKrTgnz/8f7esg2DAXl/mRj2An6u07XmtKx/mVS/mNEKhB9sD/cUkEE0dvIxj68ukBQFHZVOVkUgCzgccDTRagcv1PoM1kMw3naosUoAQAkmGDFIYwHPuYKYazEok70Eg82OjDcdGGW+T8xoc8OpQ8DECBIciyfBIjzvvsTYqYJSdg5TuBjpGXiQUiRJkYbUxkCLVEnLyM2D1MTFzkRLzYNUzMvDwM7FjSRh4OHh4JYjUSI9Y9/ea5iKmp1VIh8tFzUtC6kujyrp2Nl4SL3T9bQ09KpeVi209LwsKC7JVLIkSZKrQ4tSdXLtbCXcIR5rGZ3GyBf6M0Gd6gd1Sl+omgfFwkithZ0VxQYD+sK248rX+d/xcQAA) format('woff2');}
+@font-face{font-family:'b6';src:url(data:font/woff2;base64,d09GMgABAAAAAARYABAAAAAACKQAAAP+AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhwbgWQcKgZgP1NUQVREAFwRCAqEPINeATYCJAMoCxYABCAFhEIHIAwHGxoHIB6D426JUJSIRVEU+fOSx4f81COI1nq/enaP9i7A4BEdEEiywPfCKo4kooyPo+++BKA9sMvmFJBHMNKGqlPlAVWiqu9Ygv0PAFv470/V9yn8L4DJOw9oKLqJV8eiajfuYWuBVLDgxdrGcoHrabCCBZMCalXnAmjj2Sh11C3yQgItQJKEXKiqCYHCSEzo+VqzG7IOJkYHIEsOZSkQB9qHByAFgZBL6pLCcCgtOUJ3KHxUQrIaFrtNwqmh4eW/EqH6iWQmLyFGpCSWLFoLIlGmIi9TPhqeKQnyBHmqp7WAI7XRawEse9wnNgM+8CgNf+3i+SobXDJUf/bl/4/JvowpQEB8l14DQ2GEUJfQExojoY92do2isO9Qog9VCLmuUBDVtBZAJqRoggAJGXrCCPSEtRjorC6pGkojoV23/hIS9HlcfumcHbbaZGNRFhclXRIF9m5BA/fxGVrbiQRNpRNDIFrdhlRlYbtOwqZXOmm5Pb7TatTxJ2ntZ3jvxZfpHc8hrVx68SKOXyXtu5neVLSP9Vy93rF36R13r8ac7c+ebYuwzvjLlwtM1jp2vWfGjuej9yXJs//esw3r1l33bb3zpmjfO1SSmZ4106qlJ6hKMz92oNmxrw/sfiY3GHnj6sWbDslh7l1WdVKRHT+yMnfuPZjFrhw/55ZoWvT6YWfotHyv/E6oExZqyz/Sl9l4c9V/if5Pb5O8baAtyPuXwlvZTNXRCaRD8//Wb3J15HFfrbuZU4MljDzIqy86ytLq6qCkLl3fLNCVBxmMsjDP4COKBe4mnrrMx0xOHbhaqJPwCarSs2LDp8dzs+fkFWen9P7iw5OKZsU1ah7Iv0O+wP361L8VWoRerM5Nrb8WHTMOiu+Qxbl26hNqGV5TRVcvybt945j19SSZmVvvZ7GQEkLzbHXtoSIV8z9SKXlLrH1crGT+h3EzZqZmAD0aDlWNblJgGvAsvYZAlq30vPvcZUv29N9SMNmX8Hm7OgX58eX3LD38MFUJBNs7vDAAIjsEfqsi/sFMatCloUipEtE303wzO7qRZlpQRA7GQ6EwFVpdsnKko5raMpE38JYphsmuYNLZj5iZ699iHoYV/UPOV02MYFvQijMNq7rGSiy04vb9TUU8gHkQg6YM69apy6gaTHRMDITdImm/Ry9hQK92A2roDEOMajeiF2AHpIe2Gn2uwphRXRDDRtTA6zJq1KARQjQ0nbqN6jKmBVUrRD+afgnDcNsH0QkxZgRNVwJyis5tCOkNu7Tr101pnG/j1N6FY/okDGO9R8fAIqKnpmIjMh0FcQp4nUIT3ZAUgmN2RuAL/ILRr8MGWZjQp1srZ7Tf2mMMUJ5tLMDGV1Hu+UU=) format('woff2');}
 text{font-kerning:normal}
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important}}
 </style>
 
 </defs>
-<rect width="136" height="52" fill="#ff6b00"/>
-<text x="22.0" y="31.0" font-family="b5" font-size="15" fill="#0b0b0b">Email me</text>
-<text x="118.0" y="31.0" font-family="b5" font-size="15" fill="#0b0b0b" text-anchor="end">→</text>
+<rect width="129" height="52" rx="26" fill="#ff6b00"/>
+<text x="24.0" y="31.0" font-family="b6" font-size="15" fill="#1a0d04">Email me</text>
+<text x="107.0" y="31.0" font-family="b6" font-size="15" fill="#1a0d04" text-anchor="end">→</text>
 </svg>

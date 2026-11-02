@@ -2,7 +2,7 @@
   <img src="assets/hero.svg" width="100%" alt="Alejandro Font Muñiz — Software developer in Barcelona. Developer at Infini: I build management platforms, web applications and AI agents." />
 </a>
 
-<img src="assets/slab.svg" width="100%" alt="I build AI agents, web apps, platforms and RPA automations." />
+<img src="assets/ribbons.svg" width="100%" alt="AI agents · Astro · React · TypeScript · Bun · Java · Python · RPA — Barcelona · Software developer · Since 2021 · Infini" />
 
 <br />
 
@@ -39,4 +39,4 @@
   <a href="https://www.linkedin.com/in/alejandro-font-mu%C3%B1iz/"><img src="assets/btn-linkedin.svg" height="52" alt="LinkedIn" /></a>
 </p>
 
-<img src="assets/footer.svg" width="100%" alt="Alejandro Font · Barcelona" />
+<img src="assets/footer.svg" width="100%" alt="Alejandro Font Muñiz · Software developer · Barcelona · afont.dev" />
