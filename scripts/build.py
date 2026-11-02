@@ -175,19 +175,15 @@ def grid(s, id_="g", step=40, opacity=0.045):
 
 
 def section_head(s, x, y, title, delay=0.0):
-    """'/// TITULO' como .section-head del sitio, con las barras moviendose."""
+    """Titulo de seccion como .section-head del sitio: titulo grande y linea gruesa."""
     s.css.append(
-        "@keyframes sl{0%,70%,100%{transform:translateX(0) skewX(0)}80%{transform:translateX(5px) skewX(-14deg)}}"
-        ".sl{animation:sl 4s cubic-bezier(0.34,1.4,0.64,1) infinite;transform-box:fill-box}"
         f"@keyframes hd{{from{{opacity:0;transform:translateY(14px)}}to{{opacity:1;transform:none}}}}"
         f".hd{{animation:hd .8s {EASE_OUT} both}}"
     )
     s.add(f'<g class="hd" style="animation-delay:{delay}s">')
-    s.text(x, y, "///", "d9", 24, ACCENT, ls=-1.2, cls="sl")
-    tx = x + measure("///", "d9", 24, -1.2) + 12
-    s.text(tx, y, title.upper(), "d9", 40, TEXT, ls=0.4)
-    lx = tx + measure(title.upper(), "d9", 40, 0.4) + 22
-    s.add(f'<line x1="{lx:.0f}" y1="{y - 13}" x2="{s.w - x}" y2="{y - 13}" stroke="{BORDER_SOFT}"/>')
+    s.text(x, y, title.upper(), "d9", 44, TEXT, ls=0.4)
+    lx = x + measure(title.upper(), "d9", 44, 0.4) + 22
+    s.add(f'<rect x="{lx:.0f}" y="{y - 16}" width="{s.w - x - lx:.0f}" height="3" fill="{BORDER}"/>')
     s.add("</g>")
 
 
@@ -235,12 +231,8 @@ def hero():
         f".fade{{animation:fade .9s {EASE_OUT} both}}"
         f"@keyframes grow{{from{{transform:scaleX(0)}}to{{transform:scaleX(1)}}}}"
         f".rule{{transform-box:fill-box;transform-origin:left;animation:grow .9s {EASE_OUT} 1s both}}"
-        "@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}"
-        ".dot{animation:blink 2.4s ease-in-out infinite}"
-        "@keyframes ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(3.2);opacity:0}}"
-        ".ring{transform-box:fill-box;transform-origin:center;animation:ring 2.4s ease-out infinite}"
-        f"@keyframes badge{{0%,76%,100%{{transform:rotate(0) scale(1)}}84%{{transform:rotate(10deg) scale(1.1)}}92%{{transform:rotate(-4deg) scale(1)}}}}"
-        ".badge{transform-box:fill-box;transform-origin:center;animation:badge 5s ease-in-out 2s infinite}"
+        f"@keyframes badge{{from{{opacity:0;transform:translateY(16px)}}to{{opacity:1;transform:none}}}}"
+        f".badge > *{{animation:badge .8s {EASE_OUT} 1.3s both}}"
         f"@keyframes photo{{from{{opacity:0;transform:scale(1.08)}}to{{opacity:1;transform:none}}}}"
         f".photo{{transform-box:fill-box;transform-origin:center;animation:photo 1.4s {EASE_OUT} .4s both}}"
         "@keyframes run{to{stroke-dashoffset:-1080}}"
@@ -251,8 +243,7 @@ def hero():
     x = 56
     # kicker
     s.add('<g class="fade" style="animation-delay:.1s">')
-    s.text(x, 92, "///", "d9", 22, ACCENT, ls=-1.1)
-    s.text(x + 40, 91, "SOFTWARE DEVELOPER · BARCELONA, SPAIN", "l6", 13, DIM, ls=2.3)
+    s.text(x, 91, "SOFTWARE DEVELOPER · BARCELONA, SPAIN", "l6", 13, DIM, ls=2.3)
     s.add("</g>")
 
     # nombre, cada linea sube desde su mascara como en el hero del sitio
@@ -300,6 +291,8 @@ def hero():
         '<linearGradient id="shade" x1="0" y1="0" x2="0" y2="1">'
         f'<stop offset=".55" stop-color="{BG}" stop-opacity="0"/><stop offset="1" stop-color="{BG}" stop-opacity=".55"/></linearGradient>'
     )
+    # sombra dura naranja desplazada, sin difuminar
+    s.add(f'<rect x="{px + 12}" y="{py + 12}" width="{pw}" height="{pw + 20}" fill="{ACCENT}"/>')
     s.add(f'<rect x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="{BG_ALT}"/>')
     s.add(
         f'<g clip-path="url(#pf)"><image class="photo" x="{px - 10}" y="{py}" width="{pw + 20}" '
@@ -307,24 +300,20 @@ def hero():
         f'<rect x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="url(#shade)"/></g>'
     )
     per = 2 * (pw + pw + 20)
-    s.add(f'<rect x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="none" stroke="{BORDER}"/>')
+    s.add(f'<rect x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="none" stroke="{TEXT}" stroke-width="3"/>')
     s.add(
         f'<rect class="run" x="{px}" y="{py}" width="{pw}" height="{pw + 20}" fill="none" stroke="{ACCENT}" '
         f'stroke-width="2" stroke-dasharray="120 {per - 120}"/>'
     )
-    s.add(f'<g class="badge"><rect x="{px + pw - 34}" y="{py - 10}" width="44" height="44" rx="4" fill="{ACCENT}"/>')
-    s.text(px + pw - 12, py + 19, "///", "d9", 18, BG, ls=-0.9, anchor="middle")
+    # pegatina "available" que pisa el borde del retrato, como en el sitio
+    label = "AVAILABLE FOR PROJECTS"
+    bw = measure(label, "d9", 17, 0.2) + 26
+    bx, by = px - 16, py + pw - 30
+    s.add(f'<g class="badge" transform="rotate(-4 {bx + bw / 2:.0f} {by + 18})">')
+    s.add(f'<rect x="{bx + 5}" y="{by + 5}" width="{bw:.0f}" height="36" fill="{TEXT}"/>')
+    s.add(f'<rect x="{bx}" y="{by}" width="{bw:.0f}" height="36" fill="{ACCENT}"/>')
+    s.text(bx + 13, by + 25, label, "d9", 17, BG, ls=0.2)
     s.add("</g>")
-
-    # estado
-    sy = py + pw + 20 + 32
-    s.add('<g class="fade" style="animation-delay:1.4s">')
-    s.add(f'<circle class="ring" cx="{px + 5}" cy="{sy - 4}" r="4" fill="{GREEN}"/>')
-    s.add(f'<circle class="dot" cx="{px + 5}" cy="{sy - 4}" r="4" fill="{GREEN}"/>')
-    s.text(px + 18, sy, "AVAILABLE FOR PROJECTS", "l5", 11, DIM, ls=1.8)
-    s.add("</g>")
-
-    s.text(x, 436, "41.38° N · 2.17° E", "l5", 10, GHOST, ls=2)
     s.render("hero.svg")
 
 
@@ -337,8 +326,8 @@ def marquee(items, name, fill, fg, sep, reverse=False, h=62, size=26, speed=34):
         it = it.upper()
         xs.append((x, it, False))
         x += measure(it, "d8", size, ls) + gap
-        xs.append((x, "///", True))
-        x += measure("///", "d8", size, ls) + gap
+        xs.append((x, "", True))
+        x += size * 0.5 + gap
     total = x
     d = "reverse" if reverse else "normal"
     s.css.append(
@@ -350,7 +339,13 @@ def marquee(items, name, fill, fg, sep, reverse=False, h=62, size=26, speed=34):
     rep = int(s.w // total) + 2
     for r in range(rep):
         for xx, t, is_sep in xs:
-            s.text(xx + r * total, y, t, "d8", size, sep if is_sep else fg, ls=ls)
+            if is_sep:
+                # separador: bloque macizo girado
+                q, cx0, cy0 = size * 0.32, xx + r * total + size * 0.25, h / 2
+                s.add(f'<rect x="{cx0 - q / 2:.1f}" y="{cy0 - q / 2:.1f}" width="{q:.1f}" height="{q:.1f}" '
+                      f'fill="{sep}" transform="rotate(45 {cx0:.1f} {cy0:.1f})"/>')
+            else:
+                s.text(xx + r * total, y, t, "d8", size, fg, ls=ls)
     s.add("</g>")
     s.defs.append(
         f'<linearGradient id="fl"><stop offset="0" stop-color="{fill}"/><stop offset="1" stop-color="{fill}" stop-opacity="0"/></linearGradient>'
@@ -476,11 +471,7 @@ def about():
         yy = fy + i * 48
         s.add(f'<g class="ln" style="animation-delay:{0.5 + i * 0.1:.2f}s">')
         s.text(fx, yy + 30, k, "l5", 10.5, FAINT, ls=2)
-        if k == "STATUS":
-            s.add(f'<circle class="dot" cx="{fx + 116}" cy="{yy + 26}" r="4" fill="{GREEN}"/>')
-            s.text(fx + 128, yy + 31, v, "b5", 14, TEXT)
-        else:
-            s.text(fx + 110, yy + 31, v, "b5", 14, TEXT)
+        s.text(fx + 110, yy + 31, v, "b5", 14, TEXT)
         s.add(f'<line x1="{fx}" y1="{yy + 48}" x2="{s.w - 48}" y2="{yy + 48}" stroke="{BORDER_SOFT}"/>')
         s.add("</g>")
     s.render("about.svg")
@@ -596,12 +587,18 @@ def project(tag, name, url_label, desc, tags, fname, live=True, w=488, kicker=""
     s.text(w - 18, 290, tag, "d9", 170, "#161616", anchor="end")
     s.add('<g class="pin">')
     s.text(28, 50, tag, "d9", 22, ACCENT)
-    kx = 28 + measure(tag, "d9", 22) + 10
-    s.text(kx, 49, "///", "d9", 16, ACCENT_DEEP, ls=-0.8)
+    kx = 28 + measure(tag, "d9", 22) + 14
     if kicker:
-        s.text(kx + measure("///", "d9", 16, -0.8) + 10, 48, kicker, "l6", 11, FAINT, ls=2)
-    s.add(f'<circle class="dot" cx="{w - 28 - measure(status, "l5", 11, 1.8) - 12}" cy="45" r="4" fill="{GREEN}"/>')
-    s.text(w - 28, 49, status, "l5", 11, DIM, ls=1.8, anchor="end")
+        s.text(kx, 48, kicker, "l6", 11, FAINT, ls=2)
+    # estado en una etiqueta en caja: maciza si esta en produccion
+    tw = measure(status, "l6", 10.5, 1.6) + 18
+    tx0 = w - 28 - tw
+    if live:
+        s.add(f'<rect x="{tx0:.1f}" y="32" width="{tw:.1f}" height="24" fill="{ACCENT}"/>')
+        s.text(tx0 + 9, 48, status, "l6", 10.5, BG, ls=1.6)
+    else:
+        s.add(f'<rect x="{tx0:.1f}" y="32" width="{tw:.1f}" height="24" fill="none" stroke="{DIM}" stroke-width="1.5"/>')
+        s.text(tx0 + 9, 48, status, "l6", 10.5, DIM, ls=1.6)
     s.text(28, 112, name.upper(), "d9", 48, TEXT, ls=0.4)
     y = 146
     for l in wrap(desc, "b4", 14.5, min(w - 68, 620)):
@@ -644,7 +641,7 @@ def education():
     s.css.append(
         f"@keyframes ed{{from{{opacity:0;transform:translateY(12px)}}to{{opacity:1;transform:none}}}}"
         f".ed{{animation:ed .8s {EASE_OUT} both}}"
-        "@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}.pend{animation:blink 2.4s ease-in-out infinite}"
+        "@keyframes st{to{transform:translateX(17px)}}.st{animation:st .9s linear infinite}"
     )
     # estudios: periodo, titulo y centro, con la barra naranja de los pilares del sitio
     for i, (period, title, school) in enumerate(studies):
@@ -664,11 +661,25 @@ def education():
     for i, (name, done) in enumerate(certs):
         y = cy + 40 + i * row
         s.add(f'<g class="ed" style="animation-delay:{0.5 + i * 0.08:.2f}s">')
-        s.add(f'<rect x="{cx}" y="{y + 15}" width="6" height="6" fill="{ACCENT}"/>')
-        s.text(cx + 18, y + 23, name, "b5", 14, TEXT)
+        s.text(cx, y + 23, name, "b5", 14, TEXT if done else MUTED)
         state = "OBTAINED" if done else "IN PROGRESS"
-        s.text(s.w - 48, y + 23, state, "l6", 10.5, GREEN if done else AMBER, ls=1.8, anchor="end",
-               cls="" if done else "pend")
+        tw = measure(state, "l6", 10, 1.6) + 18
+        tx0 = s.w - 48 - tw
+        if done:
+            s.add(f'<rect x="{tx0:.1f}" y="{y + 8}" width="{tw:.1f}" height="22" fill="{ACCENT}"/>')
+            s.text(tx0 + 9, y + 23, state, "l6", 10, BG, ls=1.6)
+        else:
+            # "en curso": rayas que avanzan dentro de la caja, como en el sitio
+            cid = f"cp{i}"
+            s.defs.append(f'<clipPath id="{cid}"><rect x="{tx0:.1f}" y="{y + 8}" width="{tw:.1f}" height="22"/></clipPath>')
+            s.add(f'<g clip-path="url(#{cid})"><g class="st">')
+            k = tx0 - 34
+            while k < tx0 + tw + 20:
+                s.add(f'<path d="M{k:.1f} {y + 30} l22 -22 h6 l-22 22z" fill="{ACCENT}" opacity=".35"/>')
+                k += 17
+            s.add("</g></g>")
+            s.add(f'<rect x="{tx0:.1f}" y="{y + 8}" width="{tw:.1f}" height="22" fill="none" stroke="{ACCENT}" stroke-width="1.5"/>')
+            s.text(tx0 + 9, y + 23, state, "l6", 10, TEXT, ls=1.6)
         if i < len(certs) - 1:
             s.add(f'<line x1="{cx}" y1="{y + row - 4}" x2="{s.w - 48}" y2="{y + row - 4}" stroke="{BORDER_SOFT}" stroke-dasharray="2 4"/>')
         s.add("</g>")
@@ -687,14 +698,16 @@ def contact():
         f"@keyframes cu{{from{{transform:translateY(90px)}}to{{transform:none}}}}"
         f".cu{{animation:cu 1s {EASE_OUT} both}}"
         f"@keyframes cf{{from{{opacity:0}}to{{opacity:1}}}}.cf{{animation:cf 1s {EASE_OUT} both}}"
-        "@keyframes big{0%,100%{transform:translateX(0) skewX(0)}50%{transform:translateX(18px) skewX(-8deg)}}"
-        ".big{animation:big 5s ease-in-out infinite;transform-box:fill-box}"
+        "@keyframes big{0%,100%{transform:rotate(45deg)}50%{transform:rotate(55deg)}}"
+        ".big{animation:big 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}"
     )
     s.defs.append('<clipPath id="rc"><rect x="640" y="0" width="360" height="300"/></clipPath>')
     s.add('<g clip-path="url(#rc)"><g class="dgm"><rect x="640" y="0" width="420" height="300" fill="url(#dg)"/></g></g>')
-    s.text(952, 250, "///", "d9", 260, ACCENT_DEEP, ls=-14, anchor="end", cls="big")
+    s.add(f'<g clip-path="url(#rc)"><rect class="big" x="760" y="80" width="140" height="140" fill="{BG}"/></g>')
     s.add('<g class="cf" style="animation-delay:.1s">')
-    s.text(56, 70, "/// LET'S TALK", "l6", 13, BG, ls=2.4)
+    kw = measure("LET'S TALK", "l6", 12, 2.2) + 22
+    s.add(f'<rect x="56" y="48" width="{kw:.1f}" height="28" fill="none" stroke="{BG}" stroke-width="2"/>')
+    s.text(67, 67, "LET'S TALK", "l6", 12, BG, ls=2.2)
     s.add("</g>")
     s.defs.append('<clipPath id="c1"><rect x="0" y="82" width="700" height="84"/></clipPath>')
     s.defs.append('<clipPath id="c2"><rect x="0" y="160" width="700" height="80"/></clipPath>')

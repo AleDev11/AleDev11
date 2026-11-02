@@ -2,9 +2,9 @@
 <title>Stack: Astro, React, TypeScript, Next.js, Bun, Hono, Java, Spring Boot, Python, AI Agents, RPA, Cloudflare, AWS, Docker, PostgreSQL</title>
 <defs>
 <style>
-@font-face{font-family:'d8';src:url(data:font/woff2;base64,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) format('woff2');}
+@font-face{font-family:'d8';src:url(data:font/woff2;base64,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) format('woff2');}
 text{font-kerning:normal}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-2845.5px)}}.mq{animation:mq 34s linear infinite normal}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-2474.2px)}}.mq{animation:mq 34s linear infinite normal}
 @media (prefers-reduced-motion: reduce){*{animation:none!important}}
 </style>
 <linearGradient id="fl"><stop offset="0" stop-color="#ff6b00"/><stop offset="1" stop-color="#ff6b00" stop-opacity="0"/></linearGradient><linearGradient id="fr"><stop offset="0" stop-color="#ff6b00" stop-opacity="0"/><stop offset="1" stop-color="#ff6b00"/></linearGradient>
@@ -12,65 +12,65 @@ text{font-kerning:normal}
 <rect width="1000" height="62" fill="#ff6b00"/>
 <g class="mq">
 <text x="0.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">ASTRO</text>
-<text x="101.8" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="173.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">REACT</text>
-<text x="274.7" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="346.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">TYPESCRIPT</text>
-<text x="507.7" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="579.4" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">NEXT.JS</text>
-<text x="701.0" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="772.8" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">BUN</text>
-<text x="848.3" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="920.1" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">HONO</text>
-<text x="1009.3" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="1081.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">JAVA</text>
-<text x="1170.8" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="1242.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">SPRING BOOT</text>
-<text x="1411.7" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="1483.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">PYTHON</text>
-<text x="1600.0" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="1671.8" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">AI AGENTS</text>
-<text x="1814.6" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="1886.3" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">RPA</text>
-<text x="1961.5" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="2033.3" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">CLOUDFLARE</text>
-<text x="2198.3" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="2270.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">AWS</text>
-<text x="2350.6" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="2422.3" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">DOCKER</text>
-<text x="2536.8" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="2608.6" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">POSTGRESQL</text>
-<text x="2773.7" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="2845.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">ASTRO</text>
-<text x="2947.3" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="3019.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">REACT</text>
-<text x="3120.2" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="3192.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">TYPESCRIPT</text>
-<text x="3353.1" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="3424.9" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">NEXT.JS</text>
-<text x="3546.5" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="3618.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">BUN</text>
-<text x="3693.8" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="3765.6" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">HONO</text>
-<text x="3854.8" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="3926.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">JAVA</text>
-<text x="4016.3" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="4088.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">SPRING BOOT</text>
-<text x="4257.2" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="4328.9" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">PYTHON</text>
-<text x="4445.5" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="4517.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">AI AGENTS</text>
-<text x="4660.1" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="4731.8" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">RPA</text>
-<text x="4807.0" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="4878.7" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">CLOUDFLARE</text>
-<text x="5043.8" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="5115.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">AWS</text>
-<text x="5196.0" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="5267.8" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">DOCKER</text>
-<text x="5382.3" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
-<text x="5454.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">POSTGRESQL</text>
-<text x="5619.2" y="40.4" font-family="d8" font-size="26" fill="#7a2e00" letter-spacing="1.04">///</text>
+<rect x="104.1" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 108.3 31.0)"/>
+<text x="148.8" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">REACT</text>
+<rect x="252.3" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 256.5 31.0)"/>
+<text x="297.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">TYPESCRIPT</text>
+<rect x="460.5" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 464.7 31.0)"/>
+<text x="505.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">NEXT.JS</text>
+<rect x="629.1" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 633.3 31.0)"/>
+<text x="673.8" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">BUN</text>
+<rect x="751.7" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 755.8 31.0)"/>
+<text x="796.3" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">HONO</text>
+<rect x="887.9" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 892.0 31.0)"/>
+<text x="932.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">JAVA</text>
+<rect x="1024.6" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 1028.8 31.0)"/>
+<text x="1069.3" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">SPRING BOOT</text>
+<rect x="1240.8" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 1244.9 31.0)"/>
+<text x="1285.4" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">PYTHON</text>
+<rect x="1404.3" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 1408.5 31.0)"/>
+<text x="1449.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">AI AGENTS</text>
+<rect x="1594.2" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 1598.3 31.0)"/>
+<text x="1638.8" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">RPA</text>
+<rect x="1716.3" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 1720.5 31.0)"/>
+<text x="1761.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">CLOUDFLARE</text>
+<rect x="1928.4" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 1932.5 31.0)"/>
+<text x="1973.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">AWS</text>
+<rect x="2055.9" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 2060.0 31.0)"/>
+<text x="2100.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">DOCKER</text>
+<rect x="2217.4" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 2221.5 31.0)"/>
+<text x="2262.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">POSTGRESQL</text>
+<rect x="2429.5" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 2433.7 31.0)"/>
+<text x="2474.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">ASTRO</text>
+<rect x="2578.3" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 2582.5 31.0)"/>
+<text x="2623.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">REACT</text>
+<rect x="2726.5" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 2730.7 31.0)"/>
+<text x="2771.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">TYPESCRIPT</text>
+<rect x="2934.7" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 2938.9 31.0)"/>
+<text x="2979.4" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">NEXT.JS</text>
+<rect x="3103.3" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 3107.5 31.0)"/>
+<text x="3148.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">BUN</text>
+<rect x="3225.9" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 3230.0 31.0)"/>
+<text x="3270.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">HONO</text>
+<rect x="3362.1" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 3366.2 31.0)"/>
+<text x="3406.7" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">JAVA</text>
+<rect x="3498.8" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 3503.0 31.0)"/>
+<text x="3543.5" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">SPRING BOOT</text>
+<rect x="3715.0" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 3719.1 31.0)"/>
+<text x="3759.6" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">PYTHON</text>
+<rect x="3878.5" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 3882.7 31.0)"/>
+<text x="3923.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">AI AGENTS</text>
+<rect x="4068.4" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 4072.5 31.0)"/>
+<text x="4113.0" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">RPA</text>
+<rect x="4190.5" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 4194.7 31.0)"/>
+<text x="4235.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">CLOUDFLARE</text>
+<rect x="4402.6" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 4406.7 31.0)"/>
+<text x="4447.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">AWS</text>
+<rect x="4530.1" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 4534.2 31.0)"/>
+<text x="4574.7" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">DOCKER</text>
+<rect x="4691.6" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 4695.7 31.0)"/>
+<text x="4736.2" y="40.4" font-family="d8" font-size="26" fill="#0a0a0a" letter-spacing="1.04">POSTGRESQL</text>
+<rect x="4903.8" y="26.8" width="8.3" height="8.3" fill="#7a2e00" transform="rotate(45 4907.9 31.0)"/>
 </g>
 <rect width="80" height="62" fill="url(#fl)"/><rect x="920" width="80" height="62" fill="url(#fr)"/>
 </svg>
