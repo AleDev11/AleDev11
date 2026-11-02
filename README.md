@@ -4,7 +4,7 @@
 
 <img src="assets/marquee.svg" width="100%" alt="Astro · React · TypeScript · Next.js · Bun · Hono · Java · Spring Boot · Python · AI Agents · RPA · Cloudflare · AWS · Docker · PostgreSQL" />
 
-<img src="assets/stats.svg" width="100%" alt="Years building software · products live · languages spoken" />
+<img src="assets/stats.svg" width="100%" alt="Years building software · projects shipped · languages spoken" />
 
 <br />
 
@@ -23,7 +23,7 @@
 <a href="https://raxcustom.com"><img src="assets/project-rax.svg" width="100%" alt="01 · Rax Custom — Website for a vehicle upholstery and restoration workshop in Tenerife: 3D seat configurator, live Google reviews, project gallery and instant quote requests." /></a>
 
 <a href="https://ui.afont.dev"><img src="assets/project-ui.svg" width="49%" alt="02 · afont/ui — My own UI component registry, installable straight into any project from the command line." /></a>
-<a href="https://fleetly.afont.dev"><img src="assets/project-fleetly.svg" width="49%" alt="03 · Fleetly — Company portal for internal fleet management, with a separate administration panel." /></a>
+<a href="https://github.com/AleDev11/meeting-notes"><img src="assets/project-meeting-notes.svg" width="49%" alt="03 · Meeting Notes — Open-source desktop app that transcribes meetings, tells speakers apart and writes AI minutes." /></a>
 
 <br />
 
